@@ -2,14 +2,7 @@ import "./App.css";
 import { useTasks } from "./hooks/useTasks";
 
 function App() {
-  const {
-    tasks,
-    selected,
-    deleteTask,
-    getSingleTask,
-    getAsyncTasks,
-    updateTask,
-  } = useTasks();
+  const { tasks, selected, deleteTask, getSingleTask, getAsyncTasks, updateTask } = useTasks();
 
   const getAllTasks = () => getAsyncTasks();
 
@@ -34,12 +27,8 @@ function App() {
             <span>Completed: {task.completed?.toString()}</span>
             <span>ID: {task.id}</span>
             <button onClick={() => deleteTask(task.id)}>Delete Task</button>
-            <button onClick={() => getSingleTask(task.id)}>
-              Highlight Task
-            </button>
-            <button onClick={() => updateTask(task.id)}>
-              Toggle Completed
-            </button>
+            <button onClick={() => getSingleTask(task.id)}>Highlight Task</button>
+            <button onClick={() => updateTask(task.id)}>Toggle Completed</button>
           </div>
         ))}
       </ul>

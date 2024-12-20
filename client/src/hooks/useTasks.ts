@@ -10,11 +10,7 @@ export const useTasks = () => {
   const getAsyncTasks = async (params?: { [key: string]: string }) => {
     try {
       const { data } = await axios.get(BASE_URL, { params });
-      setTasks(
-        (data.tasks as TaskDTO[]).map(
-          task => ({ ...task, id: task._id } as Task)
-        )
-      );
+      setTasks((data.tasks as TaskDTO[]).map(task => ({ ...task, id: task._id }) as Task));
     } catch (error) {
       console.log(error);
     }
@@ -50,9 +46,7 @@ export const useTasks = () => {
         completed: !task.completed,
       });
       setSelected(data.task);
-      setTasks(
-        tasks.map(t => (t.id === id ? { ...t, completed: !t.completed } : t))
-      );
+      setTasks(tasks.map(t => (t.id === id ? { ...t, completed: !t.completed } : t)));
     } catch (error) {
       console.log(error);
     }
