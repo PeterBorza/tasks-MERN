@@ -6,12 +6,12 @@ import { errorHandlerMiddleware } from "./middleware/error-handler.js";
 import path from "path";
 
 import tasks from "./routes/tasks.js";
-import { APP_ORIGIN, NODE_ENV, PORT } from "./constants/env.js";
+import { APP_ORIGIN, NODE_ENV, PORT, PROD_URL } from "./constants/env.js";
 
 const app = express();
 
 const corsOptions = {
-  origin: [APP_ORIGIN],
+  origin: [APP_ORIGIN, PROD_URL],
 };
 
 app.use(cors(corsOptions));
