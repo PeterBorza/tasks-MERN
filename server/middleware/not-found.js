@@ -3,4 +3,4 @@ const notFound = (req, res) => {
   return res.status(404).send(`Task with id: ${taskId} is not found`);
 };
 
-module.exports = notFound;
+export { notFound };

@@ -1,35 +1,39 @@
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./db/connect");
-require("dotenv").config();
-const notFound = require("./middleware/not-found");
-const errorHandlerMiddleware = require("./middleware/error-handler");
-const tasks = require("./routes/tasks");
+import express from "express";
+import cors from "cors";
+import { connectDB } from "./db/connect.js";
+import { notFound } from "./middleware/not-found.js";
+import { errorHandlerMiddleware } from "./middleware/error-handler.js";
+import path from "path";
+
+import tasks from "./routes/tasks.js";
+import { APP_ORIGIN, NODE_ENV, PORT } from "./constants/env.js";
 
 const app = express();
-const PORT = 8080;
 
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: [APP_ORIGIN],
 };
 
 app.use(cors(corsOptions));
+
+const __dirname = path.resolve();
+
 app.use(express.json());
 
 app.use("/api/tasks", tasks);
 
+if (NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/client/dist")));
+
+  app.get("*", (_req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+  });
+}
+
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 
-const start = async () => {
-  try {
-    await connectDB(process.env.MONGO_URI);
-    app.listen(PORT, () =>
-      console.log(`Server is listening on port ${PORT}...`)
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-start();
+app.listen(PORT, async () => {
+  console.log(`Server is listening on port ${PORT}...`);
+  await connectDB();
+});

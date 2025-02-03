@@ -1,6 +1,6 @@
-const Task = require("../models/Task");
-const { createCustomError } = require("../errors/custom-error");
-require("express-async-errors");
+import Task from "../models/Task.js";
+import { createCustomError } from "../errors/custom-error.js";
+import "express-async-errors";
 
 const createTask = async (req, res) => {
   const task = await Task.create(req.body);
@@ -46,10 +46,4 @@ const getTask = async (req, res) => {
   res.status(200).json({ task });
 };
 
-module.exports = {
-  createTask,
-  getAllTasks,
-  deleteTask,
-  updateTask,
-  getTask,
-};
+export { createTask, getAllTasks, deleteTask, updateTask, getTask };

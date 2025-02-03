@@ -25,7 +25,6 @@ function App() {
           <div key={task.id} className="taskWrapper">
             <li className="taskItem">{task.name}</li>
             <span>Completed: {task.completed?.toString()}</span>
-            <span>ID: {task.id}</span>
             <button onClick={() => deleteTask(task.id)}>Delete Task</button>
             <button onClick={() => getSingleTask(task.id)}>Highlight Task</button>
             <button onClick={() => updateTask(task.id)}>Toggle Completed</button>

@@ -8,6 +8,6 @@ const asyncWrapper = fn => {
   };
 };
 
-module.exports = asyncWrapper;
+export { asyncWrapper };
 
-// not used in favor to express-async-errors lib
+// not used in favour to express-async-errors library

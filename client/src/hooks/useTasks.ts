@@ -53,8 +53,8 @@ export const useTasks = () => {
   };
 
   useEffect(() => {
-    getAsyncTasks();
-  }, []);
+    if (tasks.length === 0) getAsyncTasks();
+  }, [tasks]);
 
   return {
     tasks,
