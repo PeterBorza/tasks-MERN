@@ -3,13 +3,18 @@ import { useEffect, useState } from "react";
 import { Task, TaskDTO } from "../utils";
 
 export const useTasks = () => {
-  const BASE_URL = import.meta.env.VITE_BASE_URI;
+  const BASE_URL = import.meta.env.DEV
+    ? import.meta.env.VITE_BASE_URI
+    : import.meta.env.VITE_PROD_URI;
+
+  const tasksURL = BASE_URL + "/api/tasks";
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selected, setSelected] = useState<Task | undefined>();
 
   const getAsyncTasks = async (params?: { [key: string]: string }) => {
     try {
-      const { data } = await axios.get(BASE_URL, { params });
+      const { data } = await axios.get(tasksURL, { params });
       setTasks((data.tasks as TaskDTO[]).map(task => ({ ...task, id: task._id }) as Task));
     } catch (error) {
       console.log(error);
@@ -18,7 +23,7 @@ export const useTasks = () => {
 
   const deleteTask = async (id: string) => {
     try {
-      await axios.delete(`${BASE_URL}/${id}`);
+      await axios.delete(`${tasksURL}/${id}`);
       setTasks(prev => prev.filter(task => task.id !== id));
       if (selected?.id === id) {
         setSelected(undefined);
@@ -30,7 +35,7 @@ export const useTasks = () => {
 
   const getSingleTask = async (id: string) => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/${id}`);
+      const { data } = await axios.get(`${tasksURL}/${id}`);
       setSelected(data.task);
     } catch (error) {
       console.log(error);
@@ -42,7 +47,7 @@ export const useTasks = () => {
       const task = tasks.find(t => t.id === id);
       if (!task) return;
 
-      const { data } = await axios.patch(`${BASE_URL}/${id}`, {
+      const { data } = await axios.patch(`${tasksURL}/${id}`, {
         completed: !task.completed,
       });
       setSelected(data.task);
