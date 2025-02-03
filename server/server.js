@@ -23,7 +23,7 @@ app.use(express.json());
 app.use("/api/tasks", tasks);
 
 if (NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/client/dist")));
+  app.use(express.static(path.join(__dirname, "../client/dist")));
 
   app.get("*", (_req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
