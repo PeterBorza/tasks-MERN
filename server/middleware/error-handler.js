@@ -6,7 +6,7 @@ const errorHandlerMiddleware = (err, _req, res, _next) => {
   }
 
   return res.status(500).json({
-    msg: "Something went wrong, please  try again later",
+    message: "Something went wrong, please  try again later",
   });
 };
 
