@@ -1,10 +1,18 @@
+import { ThemeProvider } from "styled-components";
 import { useDocumentTitle } from "./hooks";
 import Routes from "./Router/router";
+import { theme } from "./theme";
+import GlobalStyles from "./styles/global-styles";
 
 const App = () => {
   useDocumentTitle();
 
-  return <Routes />;
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Routes />
+    </ThemeProvider>
+  );
 };
 
 export default App;

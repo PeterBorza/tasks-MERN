@@ -1,17 +1,18 @@
 import Task from "../models/Task.js";
 import { createCustomError } from "../errors/custom-error.js";
-import "express-async-errors";
 import { BadRequest } from "../errors/bad-request.js";
+import { NotFoundError } from "../errors/not-found.js";
 
 const createTask = async (req, res) => {
   const { name } = req.body;
 
-  if (name) {
-    const task = await Task.create(req.body);
-    return res.status(201).json({ task });
+  const task = await Task.create(req.body);
+
+  if (!name) {
+    throw new BadRequest("Please provide a name for the task");
   }
 
-  throw new BadRequest("Pleas provide a name for the task");
+  return res.status(201).json({ task });
 };
 
 const getAllTasks = async (req, res) => {
@@ -38,7 +39,7 @@ const updateTask = async (req, res) => {
   });
 
   if (!task) {
-    createCustomError("Task not found", 404);
+    throw new NotFoundError("Task not found");
   }
 
   res.status(200).json({ task });
@@ -48,7 +49,7 @@ const getTask = async (req, res) => {
   const task = await Task.findOne({ _id: req.params.id });
 
   if (!task) {
-    createCustomError("Task not found", 404);
+    throw new NotFoundError("Task not found");
   }
 
   res.status(200).json({ task });

@@ -1,13 +1,13 @@
-import { CustomAPIError } from "../errors/custom-error.js";
+export const errorHandlerMiddleware = (err, req, res, next) => {
+  let customError = {
+    statusCode: err.statusCode || 500,
+    msg: err.message || "Something went wrong, please try again later",
+  };
 
-const errorHandlerMiddleware = (err, _req, res, _next) => {
-  if (err instanceof CustomAPIError) {
-    return res.status(err.statusCode).json({ msg: err.message });
+  if (err.name === "CastError") {
+    customError.msg = `No item found with id: ${err.value}`;
+    customError.statusCode = 404;
   }
 
-  return res.status(500).json({
-    message: "Something went wrong, please  try again later",
-  });
+  return res.status(customError.statusCode).json({ msg: customError.msg });
 };
-
-export { errorHandlerMiddleware };
