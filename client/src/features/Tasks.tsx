@@ -13,15 +13,18 @@ const Tasks = () => {
   };
   return (
     <Container>
-      <Title>Task Manager</Title>
-      <h3>{selected?.name}</h3>
-      <Controls>
-        <Label htmlFor="completed">Get completed</Label>
-        <Check id="completed" type="checkbox" onChange={getCompletedTasks} />
+      <Toolbar>
+        <h3>Task Manager:</h3>
+        <h3>{selected?.name}</h3>
+        <Controls>
+          <Label htmlFor="completed">Get completed</Label>
+          <Check id="completed" type="checkbox" onChange={getCompletedTasks} />
 
-        <Button onClick={getAllTasks}>Get All tasks</Button>
-      </Controls>
-      <TasksContainer>
+          <Button onClick={getAllTasks}>Get All tasks</Button>
+          <Button onClick={getAllTasks}>Add</Button>
+        </Controls>
+      </Toolbar>
+      <TaskContainer>
         {tasks.map(task => (
           <TaskWrapper key={task.id}>
             <Task name={task.name} completed={task.completed} />
@@ -32,7 +35,7 @@ const Tasks = () => {
             </ButtonWrapper>
           </TaskWrapper>
         ))}
-      </TasksContainer>
+      </TaskContainer>
     </Container>
   );
 };
@@ -41,45 +44,49 @@ const Container = styled.section`
   display: grid;
   place-items: center;
   width: 100%;
+  gap: 1rem;
 `;
 
-const Title = styled.h2`
-  text-align: center;
+const Toolbar = styled.div`
+  width: 100%;
+  padding: 0.5rem;
+  gap: 1rem;
+  display: flex;
+  align-items: center;
 `;
 
-const TasksContainer = styled.div`
+const TaskContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  align-items: center;
   gap: 1rem;
   padding: 1rem;
   overflow: auto;
-  height: 60vh;
-  width: 60%;
+  width: 100%;
+  max-height: 60vh;
   scrollbar-width: thin;
+  scrollbar-color: ${props => props.theme.colors.green.default_dark} transparent;
 `;
 
 const TaskWrapper = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   padding: 1rem;
   border: 1px solid ${props => props.theme.colors.green.default_light};
   border-radius: 4px;
-  height: auto;
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 5px;
   flex: 1;
 `;
 
 const Button = styled.button`
-  display: block;
   padding: 8px 12px;
-  border: none;
-  outline: none;
   cursor: pointer;
   background-color: ${props => props.theme.colors.green.darker};
   border-radius: 4px;
@@ -90,19 +97,20 @@ const Button = styled.button`
   }
 `;
 
+const Label = styled.label`
+  cursor: pointer;
+`;
+
 const Controls = styled.div`
+  margin-left: auto;
   display: flex;
   align-items: center;
-  width: 300px;
-  max-width: 50%;
+  padding-inline: 0.5rem;
+  gap: 0.5rem;
 
   & button {
     margin-left: auto;
   }
-`;
-
-const Label = styled.label`
-  cursor: pointer;
 `;
 
 const Check = styled.input`

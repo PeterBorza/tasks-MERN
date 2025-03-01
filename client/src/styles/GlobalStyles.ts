@@ -7,6 +7,8 @@ const GlobalStyles = styled.createGlobalStyle`
   *::before,
   *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
   :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -25,6 +27,11 @@ const GlobalStyles = styled.createGlobalStyle`
     height: 100%;
     width: 100%;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  }
+
+  button {
+    border: none;
+    outline: none;
   }
 `;
 

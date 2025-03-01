@@ -2,7 +2,7 @@ import { ThemeProvider } from "styled-components";
 import { useDocumentTitle } from "./hooks";
 import Routes from "./Router/router";
 import { theme } from "./theme";
-import GlobalStyles from "./styles/global-styles";
+import GlobalStyles from "./styles/GlobalStyles";
 
 const App = () => {
   useDocumentTitle();
