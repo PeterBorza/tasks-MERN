@@ -5,3 +5,10 @@ export type Task = {
 };
 
 export type TaskDTO = Omit<Task, "id"> & { _id: string };
+
+export type Options = "completed" | "todo" | "all";
+
+export enum TaskState {
+  DONE = "DONE",
+  TODO = "TO DO",
+}
