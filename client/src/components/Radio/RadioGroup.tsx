@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
-import { Options } from "../../features/Tasks/Tasks";
+import { Options } from "../../features/Tasks/types";
 
 type Props = {
   options: string[];
