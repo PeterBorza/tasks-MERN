@@ -1,9 +1,9 @@
 import { ThemeProvider } from "styled-components";
+import { ToastContainer } from "react-toastify";
 import { useDocumentTitle } from "./hooks";
-import Routes from "./Router/Router";
 import { theme } from "./styles/theme";
 import GlobalStyles from "./styles/GlobalStyles";
-import { ToastContainer } from "react-toastify";
+import { AppRoutes } from "./Router/router";
 
 const App = () => {
   useDocumentTitle();
@@ -12,7 +12,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <ToastContainer />
-      <Routes />
+      <AppRoutes />
     </ThemeProvider>
   );
 };

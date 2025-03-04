@@ -28,9 +28,7 @@ const router: RouteObject[] = [
   },
 ];
 
-const Routes = () => {
+export const AppRoutes = () => {
   const appRouter = createBrowserRouter(router);
   return <RouterProvider router={appRouter} fallbackElement={<div>Error in router</div>} />;
 };
-
-export default Routes;
