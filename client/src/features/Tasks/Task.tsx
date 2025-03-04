@@ -30,6 +30,7 @@ const TaskWrapper = styled.div`
   gap: 0.5rem;
   padding: 0.5rem;
   border: 1px solid ${props => props.theme.colors.green.default_light};
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
 `;
 

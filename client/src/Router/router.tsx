@@ -1,17 +1,16 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from "react-router-dom";
 
-import Home from "../components/Home";
-import About from "../components/About";
-import Contact from "../components/Contact";
-import { Tasks } from "../features";
-const router = [
+import Home from "./Home";
+import { LandingPage, Tasks } from "src/features";
+import Contact from "components/Contact";
+const router: RouteObject[] = [
   {
     path: "/",
     element: <Home />,
     children: [
       {
-        path: "/about",
-        element: <About />,
+        index: true,
+        element: <LandingPage />,
       },
       {
         path: "/contact",
@@ -20,6 +19,10 @@ const router = [
       {
         path: "/tasks",
         element: <Tasks />,
+      },
+      {
+        path: "*",
+        element: <Navigate to="/" replace />,
       },
     ],
   },

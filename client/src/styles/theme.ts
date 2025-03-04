@@ -10,4 +10,10 @@ export const theme = {
       darkest: "#718355",
     },
   },
+  fontSize: {
+    sm: "12px",
+    md: "14px",
+    lg: "16px",
+    xl: "20px",
+  },
 };

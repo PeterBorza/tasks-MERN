@@ -31,7 +31,9 @@ const RadioGroup = ({ options, selected, name, onChange }: Props) => {
 
 const StyledRadioGroup = styled.div`
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
 `;
 
 const Radio = styled.div`

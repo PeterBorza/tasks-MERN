@@ -19,13 +19,14 @@ const Input = ({ name, value, onChange }: Props) => {
 };
 
 const StyledInput = styled.textarea`
-  width: min(250px, 100%);
-  padding: 8px;
+  min-width: min(300px, 100%);
+  padding: 4px 8px;
   line-height: 1.5;
   font-size: 16px;
   border: none;
   outline: none;
   border-radius: 4px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
 `;
 
 export default Input;

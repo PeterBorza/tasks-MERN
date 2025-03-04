@@ -22,28 +22,19 @@ const Controls = ({ onCreate, selected, setSelected }: Props) => {
   return (
     <StyledControls>
       <Input name="task" value={task} onChange={setTask} />
-      <Button label="Add task" onClick={handleCreateTask} />
       <RadioGroup
         options={["completed", "todo", "all"]}
         selected={selected}
         onChange={setSelected}
         name="tasks"
       />
+      <Button label="Add task" onClick={handleCreateTask} />
     </StyledControls>
   );
 };
 
 const StyledControls = styled.div`
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  padding-inline: 0.5rem;
-  gap: 0.5rem;
-
-  & button {
-    margin-left: auto;
-  }
+  width: 50%;
 `;
 
 export default Controls;

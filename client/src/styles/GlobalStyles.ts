@@ -9,6 +9,7 @@ const GlobalStyles = styled.createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    /* border: 1px solid red; */
   }
   :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -22,7 +23,8 @@ const GlobalStyles = styled.createGlobalStyle`
 
   body,
   html,
-  #root {
+  #root,
+  :root {
     margin: 0;
     height: 100%;
     width: 100%;
