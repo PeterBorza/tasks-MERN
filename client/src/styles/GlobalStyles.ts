@@ -15,7 +15,7 @@ const GlobalStyles = styled.createGlobalStyle`
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
     color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
+    color: #f5f5f0;
     background-color: #242424;
     width: 100%;
     height: 100%;

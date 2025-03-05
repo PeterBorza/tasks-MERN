@@ -63,7 +63,6 @@ const Container = styled.section`
 const Toolbar = styled.div`
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   padding: 8px;
   gap: 8px;
 `;

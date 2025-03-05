@@ -1,26 +1,35 @@
+import { ThemeType } from "src/styled-components";
 import styled from "styled-components";
+
+type ButtonType = "warn" | "valid" | "disabled";
 
 type Props = {
   label: string;
   onClick: () => void;
+  type?: ButtonType;
 };
 
-const Button = ({ label, onClick }: Props) => {
-  return <StyledButton onClick={onClick}>{label}</StyledButton>;
+const backgrounds = (props: ThemeType): Record<ButtonType, string> => ({
+  warn: props.colors.main,
+  valid: props.colors.green.darker,
+  disabled: props.colors.error,
+});
+
+const Button = ({ label, onClick, type = "valid" }: Props) => {
+  return (
+    <StyledButton $type={type} onClick={onClick}>
+      {label}
+    </StyledButton>
+  );
 };
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ $type: ButtonType }>`
   padding: 8px 12px;
   cursor: pointer;
-  background-color: ${props => props.theme.colors.green.darker};
+  background-color: ${props => backgrounds(props.theme)[props.$type]};
   border-radius: 4px;
-  border: 1px solid transparent;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
   transition: scale 100ms;
-  &:hover {
-    border-color: ${props => props.theme.colors.green.light};
-    transition: border-color 200ms;
-  }
   &:active {
     scale: 0.98;
   }

@@ -10,31 +10,36 @@ type Props = {
 
 const Task = ({ task: { id, name, completed }, onDelete, onUpdate }: Props) => {
   return (
-    <TaskWrapper>
-      <TaskName>{name}</TaskName>
-      <Delete onClick={() => onDelete(id)} label="Delete" />
+    <TaskWrapper $completed={completed}>
+      <Description>{name}</Description>
+      <Delete onClick={() => onDelete(id)} label="Delete" type={completed ? "valid" : "warn"} />
       <Toggle
         $completed={completed}
         onClick={() => onUpdate(id)}
         label={completed ? TaskState.DONE : TaskState.TODO}
+        type={completed ? "valid" : "warn"}
       />
     </TaskWrapper>
   );
 };
 
-const TaskWrapper = styled.div`
+const TaskWrapper = styled.div<{ $completed: boolean }>`
   display: grid;
   grid-template:
     "task actions"
     "task actions" auto / 2fr auto;
   gap: 0.5rem;
   padding: 0.5rem;
-  border: 1px solid ${props => props.theme.colors.green.default_light};
+  border: 1px solid
+    ${props =>
+      props.$completed ? props.theme.colors.green.default_light : props.theme.colors.main};
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
+  background-color: ${props =>
+    props.$completed ? props.theme.colors.green.default_light : props.theme.colors.main};
 `;
 
-const TaskName = styled.p`
+const Description = styled.p`
   grid-area: task;
   display: -webkit-box;
   max-width: 100%;
