@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Task, TaskDTO } from "./types";
-import { AXIOS, TASKS } from "../../constants";
+import { axiosAPI, TASKS } from "src/api";
 
 export const useTasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -13,7 +13,7 @@ export const useTasks = () => {
 
   const getAsyncTasks = async (params?: { [key: string]: string | boolean }) => {
     try {
-      const { data } = await AXIOS.get(TASKS, { params });
+      const { data } = await axiosAPI.get(TASKS, { params });
       setTasks(data.tasks.map(convertTask));
     } catch (error) {
       console.log(error);
@@ -22,7 +22,7 @@ export const useTasks = () => {
 
   const deleteTask = async (id: string) => {
     try {
-      await AXIOS.delete(`${TASKS}/${id}`);
+      await axiosAPI.delete(`${TASKS}/${id}`);
       setTasks(prev => prev.filter(task => task.id !== id));
     } catch (error) {
       console.log((error as unknown as Error).message);
@@ -34,7 +34,7 @@ export const useTasks = () => {
       const task = tasks.find(t => t.id === id);
       if (!task) return;
 
-      await AXIOS.patch(`${TASKS}/${id}`, {
+      await axiosAPI.patch(`${TASKS}/${id}`, {
         completed: !task.completed,
       });
       setTasks(prev => prev.map(t => (t.id === id ? { ...t, completed: !t.completed } : t)));
@@ -47,7 +47,7 @@ export const useTasks = () => {
     try {
       const {
         data: { task },
-      } = await AXIOS.post(TASKS, { name: value });
+      } = await axiosAPI.post(TASKS, { name: value });
 
       setTasks(prev => [...prev, convertTask(task)]);
     } catch (error) {

@@ -1,6 +1,6 @@
 import Task from "../models/Task.js";
 import { createCustomError } from "../errors/custom-error.js";
-import { BadRequest } from "../errors/bad-request.js";
+import { BadRequestError } from "../errors/bad-request.js";
 import { NotFoundError } from "../errors/not-found.js";
 
 const createTask = async (req, res) => {
@@ -9,14 +9,14 @@ const createTask = async (req, res) => {
   const task = await Task.create(req.body);
 
   if (!name) {
-    throw new BadRequest("Please provide a name for the task");
+    throw new BadRequestError("Please provide a name for the task");
   }
 
   return res.status(201).json({ task });
 };
 
 const getAllTasks = async (req, res) => {
-  const tasks = await Task.find(req.query).sort("name");
+  const tasks = await Task.find(req.query).sort("completed");
   res.status(200).json({ tasks });
 };
 

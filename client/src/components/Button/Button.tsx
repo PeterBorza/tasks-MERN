@@ -29,7 +29,12 @@ const StyledButton = styled.button<{ $type: ButtonType }>`
   background-color: ${props => backgrounds(props.theme)[props.$type]};
   border-radius: 4px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-  transition: scale 100ms;
+  transition:
+    scale 100ms,
+    box-shadow 120ms;
+  &:hover {
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
+  }
   &:active {
     scale: 0.98;
   }

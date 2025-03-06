@@ -1,5 +1,5 @@
 import { ThemeProvider } from "styled-components";
-import { ToastContainer } from "react-toastify";
+import { Flip, ToastContainer } from "react-toastify";
 import { useDocumentTitle } from "./hooks";
 import { theme } from "./styles/theme";
 import GlobalStyles from "./styles/GlobalStyles";
@@ -11,7 +11,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <ToastContainer />
+      <ToastContainer transition={Flip} limit={2} hideProgressBar pauseOnFocusLoss={false} />
       <AppRoutes />
     </ThemeProvider>
   );
