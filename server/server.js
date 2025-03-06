@@ -19,7 +19,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const __dirname = path.resolve();
-console.log(" __dirname:", __dirname);
 
 app.use(express.json());
 

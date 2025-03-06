@@ -7,7 +7,7 @@ import { useTasks } from "./useTasks";
 import { Button } from "components/Button";
 import { Input } from "components/Input";
 import { RadioGroup } from "components/Radio";
-import { Dropdown } from "src/components/Dropdown";
+import { Dropdown } from "components/Dropdown";
 
 const Tasks = () => {
   const { tasks, deleteTask, updateTask, createTask, getAsyncTasks } = useTasks();
