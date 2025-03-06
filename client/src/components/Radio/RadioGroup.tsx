@@ -13,7 +13,7 @@ const RadioGroup = ({ options, selected, name, onChange }: Props) => {
   return (
     <StyledRadioGroup>
       {options.map(option => (
-        <Radio>
+        <Radio key={option}>
           <label htmlFor={option}>{option}</label>
           <input
             id={option}

@@ -35,7 +35,7 @@ const Tasks = () => {
         <Actions>
           <Button label="Add task" onClick={handleCreateTask} />
           <Button label="Refresh" onClick={getAsyncTasks} />
-          <Dropdown label="Filter">
+          <Dropdown label={`Filter: ${selected}`}>
             <RadioGroup
               options={["completed", "todo", "all"]}
               selected={selected}

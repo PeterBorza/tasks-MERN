@@ -24,6 +24,7 @@ const Button = ({ label, onClick, type = "valid" }: Props) => {
 };
 
 const StyledButton = styled.button<{ $type: ButtonType }>`
+  color: #f5f5f0;
   padding: 8px 12px;
   cursor: pointer;
   background-color: ${props => backgrounds(props.theme)[props.$type]};
