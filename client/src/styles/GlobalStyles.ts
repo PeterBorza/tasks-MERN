@@ -35,6 +35,11 @@ const GlobalStyles = styled.createGlobalStyle`
     border: none;
     outline: none;
   }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
 `;
 
 export default GlobalStyles;
