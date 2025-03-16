@@ -2,10 +2,15 @@ import { createBrowserRouter, RouteObject, RouterProvider } from "react-router-d
 import { Navigator } from "src/components/Navigator";
 
 import Home from "./Home";
-import { LandingPage, Section, Tasks } from "src/features";
+import { LandingPage, Shop, Tasks } from "src/features";
+
+export const HOME_ROUTE = "/";
+export const SHOP_ROUTE = "/shop";
+export const TASKS_ROUTE = "/tasks";
+
 const router: RouteObject[] = [
   {
-    path: "/",
+    path: HOME_ROUTE,
     element: <Home />,
     children: [
       {
@@ -13,11 +18,11 @@ const router: RouteObject[] = [
         element: <LandingPage />,
       },
       {
-        path: "/section",
-        element: <Section />,
+        path: SHOP_ROUTE,
+        element: <Shop />,
       },
       {
-        path: "/tasks",
+        path: TASKS_ROUTE,
         element: <Tasks />,
       },
       {

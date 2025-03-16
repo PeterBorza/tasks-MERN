@@ -1,10 +1,11 @@
-import { FC, PropsWithChildren, useRef, useState } from "react";
-import { Button } from "../Button";
+import { FC, PropsWithChildren, ReactNode, useRef, useState } from "react";
 import styled from "styled-components";
+
+import { Button } from "../Button";
 import { useOnClickOutside } from "src/hooks";
 
 type Props = {
-  label: string;
+  label: ReactNode;
 };
 
 const Dropdown: FC<PropsWithChildren<Props>> = ({ label, children }) => {
@@ -15,7 +16,9 @@ const Dropdown: FC<PropsWithChildren<Props>> = ({ label, children }) => {
 
   return (
     <Container ref={ref}>
-      <Button label={label} onClick={() => setOpenMenu(prev => !prev)} />
+      <Button onClick={() => setOpenMenu(prev => !prev)}>
+        <ButtonContent>{label}</ButtonContent>
+      </Button>
       {openMenu && <Menu>{children}</Menu>}
     </Container>
   );
@@ -36,6 +39,10 @@ const Menu = styled.div`
   background-color: ${props => props.theme.colors.green.default_dark};
   padding: 8px;
   box-shadow: 1px 1px 10px rgba(30, 30, 30, 0.3);
+`;
+
+const ButtonContent = styled.div`
+  width: 100px;
 `;
 
 export default Dropdown;

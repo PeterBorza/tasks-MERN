@@ -9,14 +9,14 @@ const GlobalStyles = styled.createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* border: 1px solid red; */
+    /* border: 1px solid limegreen; */
   }
   :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
     color-scheme: light dark;
-    color: #f5f5f0;
-    background-color: #242424;
+    color: ${props => props.theme.colors.light};
+    background-color: ${props => props.theme.colors.dark};
     width: 100%;
     height: 100%;
   }

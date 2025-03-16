@@ -8,6 +8,7 @@ import { errorHandlerMiddleware } from "./middleware/error-handler.js";
 import path from "path";
 
 import tasks from "./routes/tasks.js";
+import shoppingItems from "./routes/shoppingItems.js";
 import { APP_ORIGIN, NODE_ENV, PORT, PROD_URL } from "./constants/env.js";
 
 const app = express();
@@ -23,6 +24,7 @@ const __dirname = path.resolve();
 app.use(express.json());
 
 app.use("/api/tasks", tasks);
+app.use("/api/shopping", shoppingItems);
 
 if (NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));

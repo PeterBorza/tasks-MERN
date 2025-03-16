@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Button } from "../../components/Button";
-import { Input } from "../../components/Input";
-import { RadioGroup } from "../../components/Radio";
+import { Button } from "src/components/Button";
+import { Input } from "src/components/Input";
+import { RadioGroup } from "src/components/Radio";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Options } from "./types";
+import { Options } from "src/api";
 
 type Props = {
   onCreate: (task: string) => void;
@@ -28,7 +28,7 @@ const Controls = ({ onCreate, selected, setSelected }: Props) => {
         onChange={setSelected}
         name="tasks"
       />
-      <Button label="Add task" onClick={handleCreateTask} />
+      <Button onClick={handleCreateTask}>Add task</Button>
     </StyledControls>
   );
 };

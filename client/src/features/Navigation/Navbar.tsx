@@ -1,18 +1,17 @@
 import { NavLink } from "react-router-dom";
+import { HOME_ROUTE, SHOP_ROUTE, TASKS_ROUTE } from "src/Router/router";
 import styled from "styled-components";
-
-// TODO: import NavLink to see active item styles
 
 const Navbar = () => {
   return (
     <Nav>
-      <Link to="/">HOME</Link>
+      <Link to={HOME_ROUTE}>HOME</Link>
       <LinkContainer>
         <li>
-          <Link to="/section">Section</Link>
+          <Link to={SHOP_ROUTE}>Shop</Link>
         </li>
         <li>
-          <Link to="/tasks">Tasks</Link>
+          <Link to={TASKS_ROUTE}>Tasks</Link>
         </li>
       </LinkContainer>
     </Nav>

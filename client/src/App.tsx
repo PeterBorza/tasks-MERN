@@ -1,19 +1,20 @@
-import { ThemeProvider } from "styled-components";
-import { Flip, ToastContainer } from "react-toastify";
 import { useDocumentTitle } from "./hooks";
-import { theme } from "./styles/theme";
-import GlobalStyles from "./styles/GlobalStyles";
 import { AppRoutes } from "./Router/router";
+import ThemeProvider from "./providers/ThemeProvider";
+import QueryProvider from "./providers/QueryProvider";
+import ErrorBoundary from "./providers/ErrorBoundary";
 
 const App = () => {
   useDocumentTitle();
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <ToastContainer transition={Flip} limit={2} hideProgressBar pauseOnFocusLoss={false} />
-      <AppRoutes />
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <QueryProvider>
+          <AppRoutes />
+        </QueryProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 };
 

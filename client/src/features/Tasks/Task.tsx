@@ -1,24 +1,27 @@
 import styled from "styled-components";
-import { TaskState, Task as TaskType } from "./types";
-import { Button } from "../../components/Button";
+import { TaskState, Task as TaskType } from "src/api";
+import { Button } from "src/components/Button";
 
 type Props = {
   task: TaskType;
   onDelete: (id: string) => void;
-  onUpdate: (id: string) => void;
+  onUpdate: (task: TaskType) => void;
 };
 
 const Task = ({ task: { id, name, completed }, onDelete, onUpdate }: Props) => {
   return (
     <TaskWrapper $completed={completed}>
       <Description>{name}</Description>
-      <Delete onClick={() => onDelete(id)} label="Delete" type={completed ? "valid" : "warn"} />
+      <Delete onClick={() => onDelete(id)} type={completed ? "valid" : "warn"}>
+        Delete
+      </Delete>
       <Toggle
         $completed={completed}
-        onClick={() => onUpdate(id)}
-        label={completed ? TaskState.DONE : TaskState.TODO}
+        onClick={() => onUpdate({ id, name, completed: !completed })}
         type={completed ? "valid" : "warn"}
-      />
+      >
+        {completed ? TaskState.DONE : TaskState.TODO}
+      </Toggle>
     </TaskWrapper>
   );
 };

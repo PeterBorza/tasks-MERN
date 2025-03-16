@@ -1,43 +1,34 @@
 import { useEffect, useState } from "react";
-import { Task, TaskDTO } from "./types";
-import { axiosAPI, TASKS } from "src/api";
+import { deleteDTOTask, updateDTOTask, Task, getAllDTOTasks, createDTOTask } from "src/api";
+import { convertTask } from "src/api/task-api/converters";
 
 export const useTasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const convertTask = ({ _id: id, name, completed }: TaskDTO): Task => ({
-    id,
-    name,
-    completed,
-  });
+  const getAsyncTasks = async () => {
+    const { result } = await getAllDTOTasks();
 
-  const getAsyncTasks = async (params?: { [key: string]: string | boolean }) => {
-    try {
-      const { data } = await axiosAPI.get(TASKS, { params });
-      setTasks(data.tasks.map(convertTask));
-    } catch (error) {
-      console.log(error);
-    }
+    setTasks(result!.map(convertTask));
   };
 
   const deleteTask = async (id: string) => {
     try {
-      await axiosAPI.delete(`${TASKS}/${id}`);
+      const { message } = await deleteDTOTask(id);
+      console.log(message);
       setTasks(prev => prev.filter(task => task.id !== id));
     } catch (error) {
       console.log((error as unknown as Error).message);
     }
   };
 
-  const updateTask = async (id: string) => {
+  const updateTask = async (task: Task) => {
     try {
-      const task = tasks.find(t => t.id === id);
-      if (!task) return;
+      const { result } = await updateDTOTask(task);
 
-      await axiosAPI.patch(`${TASKS}/${id}`, {
-        completed: !task.completed,
-      });
-      setTasks(prev => prev.map(t => (t.id === id ? { ...t, completed: !t.completed } : t)));
+      if (result) {
+        const task = convertTask(result);
+        setTasks(prev => prev.map(t => (t.id === task.id ? task : t)));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -45,19 +36,17 @@ export const useTasks = () => {
 
   const createTask = async (value: string) => {
     try {
-      const {
-        data: { task },
-      } = await axiosAPI.post(TASKS, { name: value });
+      const { result } = await createDTOTask(value);
 
-      setTasks(prev => [...prev, convertTask(task)]);
+      if (result) setTasks(prev => [...prev, convertTask(result)]);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    if (tasks.length === 0) getAsyncTasks();
-  }, [tasks]);
+    getAsyncTasks();
+  }, []);
 
   return {
     tasks,

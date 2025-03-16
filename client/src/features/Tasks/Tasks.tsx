@@ -1,24 +1,28 @@
 import { useState } from "react";
 import Task from "./Task";
-import { Task as TaskType } from "./types";
+import { Task as TaskType, Options } from "src/api";
 import styled from "styled-components";
-import { Options } from "./types";
 import { useTasks } from "./useTasks";
 import { Button } from "components/Button";
 import { Input } from "components/Input";
 import { RadioGroup } from "components/Radio";
 import { Dropdown } from "components/Dropdown";
+// import useQueryTasks from "./useQueryTasks";
 
 const Tasks = () => {
+  // const { data, refetch } = useQueryTasks();
+
+  // console.log("query data", data);
+
   const { tasks, deleteTask, updateTask, createTask, getAsyncTasks } = useTasks();
   const [selected, setSelected] = useState<Options>("all");
   const [task, setTask] = useState("");
 
-  const filter: Record<Options, TaskType[]> = {
-    completed: tasks.filter(t => t.completed),
-    todo: tasks.filter(t => !t.completed),
-    all: tasks,
-  };
+  const filter = (data: TaskType[]): Record<Options, TaskType[]> => ({
+    completed: data.filter(t => t.completed),
+    todo: data.filter(t => !t.completed),
+    all: data,
+  });
 
   const handleCreateTask = () => {
     if (!task) return;
@@ -33,8 +37,8 @@ const Tasks = () => {
         <Input name="task" value={task} onChange={setTask} />
 
         <Actions>
-          <Button label="Add task" onClick={handleCreateTask} />
-          <Button label="Refresh" onClick={getAsyncTasks} />
+          <Button onClick={handleCreateTask}>Add task</Button>
+          <Button onClick={getAsyncTasks}>Refresh</Button>
           <Dropdown label={`Filter: ${selected}`}>
             <RadioGroup
               options={["completed", "todo", "all"]}
@@ -47,9 +51,11 @@ const Tasks = () => {
       </Toolbar>
 
       <TaskContainer>
-        {filter[selected].map(task => (
-          <Task task={task} key={task.id} onDelete={deleteTask} onUpdate={updateTask} />
-        ))}
+        {/* {isLoading && <div>...Loading</div>} */}
+        {tasks &&
+          filter(tasks)[selected].map(task => (
+            <Task task={task} key={task.id} onDelete={deleteTask} onUpdate={updateTask} />
+          ))}
       </TaskContainer>
     </Container>
   );
