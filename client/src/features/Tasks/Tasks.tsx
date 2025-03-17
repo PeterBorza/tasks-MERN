@@ -1,28 +1,29 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Task from "./Task";
 import { Task as TaskType, Options } from "src/api";
 import styled from "styled-components";
-import { useTasks } from "./useTasks";
 import { Button } from "components/Button";
 import { Input } from "components/Input";
 import { RadioGroup } from "components/Radio";
 import { Dropdown } from "components/Dropdown";
-// import useQueryTasks from "./useQueryTasks";
+import useQueryTasks from "./useQueryTasks";
 
 const Tasks = () => {
-  // const { data, refetch } = useQueryTasks();
+  const {
+    query: { data, isLoading, isError, error, refetch },
+    deleteTask,
+    createTask,
+    updateTask,
+  } = useQueryTasks();
 
-  // console.log("query data", data);
-
-  const { tasks, deleteTask, updateTask, createTask, getAsyncTasks } = useTasks();
   const [selected, setSelected] = useState<Options>("all");
   const [task, setTask] = useState("");
 
-  const filter = (data: TaskType[]): Record<Options, TaskType[]> => ({
-    completed: data.filter(t => t.completed),
-    todo: data.filter(t => !t.completed),
-    all: data,
-  });
+  const filter: Record<Options, TaskType[]> = {
+    completed: data?.filter(t => t.completed) || [],
+    todo: data?.filter(t => !t.completed) || [],
+    all: data || [],
+  };
 
   const handleCreateTask = () => {
     if (!task) return;
@@ -38,7 +39,7 @@ const Tasks = () => {
 
         <Actions>
           <Button onClick={handleCreateTask}>Add task</Button>
-          <Button onClick={getAsyncTasks}>Refresh</Button>
+          <Button onClick={refetch}>Refresh</Button>
           <Dropdown label={`Filter: ${selected}`}>
             <RadioGroup
               options={["completed", "todo", "all"]}
@@ -51,11 +52,14 @@ const Tasks = () => {
       </Toolbar>
 
       <TaskContainer>
-        {/* {isLoading && <div>...Loading</div>} */}
-        {tasks &&
-          filter(tasks)[selected].map(task => (
-            <Task task={task} key={task.id} onDelete={deleteTask} onUpdate={updateTask} />
-          ))}
+        {isLoading && <div>...Loading</div>}
+        {isError && <div>ERROR: {error.message}</div>}
+        <Suspense fallback={<div>...Loading tasks</div>}>
+          {data &&
+            filter[selected].map(task => (
+              <Task task={task} key={task.id} onDelete={deleteTask} onUpdate={updateTask} />
+            ))}
+        </Suspense>
       </TaskContainer>
     </Container>
   );

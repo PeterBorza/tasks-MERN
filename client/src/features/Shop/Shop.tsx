@@ -9,25 +9,24 @@ const Shop = () => {
     deleteItem,
   } = useQueryShoppingItems();
 
-  const { mutate: deleteShoppingItem } = deleteItem();
-
-  if (isPending) return <div>...Loading</div>;
-  if (isError) return <div>Error: {error?.message}</div>;
-
   return (
-    <Suspense fallback={<div>...Loading items</div>}>
-      <Container>
-        Shopping list work in progress
-        {shoppingList.result &&
-          shoppingList.result.map(item => (
-            <Item key={item.id} onClick={() => deleteShoppingItem(item.id)} title="Delete item">
-              <p>{item.name}</p>
-              <p>{item.category}</p>
-              <p>{item.type}</p>
-            </Item>
-          ))}
-      </Container>
-    </Suspense>
+    <>
+      {isPending && <div>...Loading</div>}
+      {isError && <div>Error: {error?.message}</div>}
+      <Suspense fallback={<div>...Loading items</div>}>
+        <Container>
+          Shopping list work in progress
+          {shoppingList &&
+            shoppingList.map(item => (
+              <Item key={item.id} onClick={() => deleteItem(item.id)} title="Delete item">
+                <p>{item.name}</p>
+                <p>{item.category}</p>
+                <p>{item.type}</p>
+              </Item>
+            ))}
+        </Container>
+      </Suspense>
+    </>
   );
 };
 
