@@ -1,14 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  deleteDTOTask,
-  getAllDTOTasks,
-  convertTask,
-  createDTOTask,
-  updateDTOTask,
-  Response,
-  TaskDTO,
-  Task,
-} from "src/api";
+import { deleteDTOTask, getAllDTOTasks, convertTask, createDTOTask, updateDTOTask } from "src/api";
 
 const useQueryTasks = () => {
   const queryClient = useQueryClient();
