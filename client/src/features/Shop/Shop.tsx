@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 import useQueryShoppingItems from "./useQueryShoppingItems";
 import { Suspense } from "react";
+import { Spinner } from "src/components/Spinner";
+import { Card } from "src/components/Card";
+import potato_200 from "src/assets/potato_200.jpg";
 
 const Shop = () => {
   const {
@@ -10,37 +13,47 @@ const Shop = () => {
   } = useQueryShoppingItems();
 
   return (
-    <>
-      {isPending && <div>...Loading</div>}
+    <Section>
       {isError && <div>Error: {error?.message}</div>}
-      <Suspense fallback={<div>...Loading items</div>}>
+      <Suspense fallback={<Spinner />}>
         <Container>
-          Shopping list work in progress
-          {shoppingList &&
-            shoppingList.map(item => (
-              <Item key={item.id} onClick={() => deleteItem(item.id)} title="Delete item">
-                <p>{item.name}</p>
-                <p>{item.category}</p>
-                <p>{item.type}</p>
-              </Item>
-            ))}
+          {isPending ? (
+            <Spinner />
+          ) : (
+            <>
+              {shoppingList?.map(item => (
+                <Card
+                  key={item.id}
+                  onClick={() => deleteItem(item.id)}
+                  title="Delete item"
+                  imageSrc={potato_200}
+                >
+                  <p>{item.name}</p>
+                  <p>{item.category}</p>
+                  <p>{item.type}</p>
+                </Card>
+              ))}
+            </>
+          )}
         </Container>
       </Suspense>
-    </>
+    </Section>
   );
 };
+
+const Section = styled.section`
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding-bottom: 3rem;
+`;
 
 const Container = styled.div`
   width: 100%;
   display: grid;
-  place-items: center;
-  border: 1px solid red;
-`;
-
-const Item = styled.div`
-  width: 300px;
-  border: 1px solid red;
-  cursor: pointer;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  padding: 16px;
+  gap: 8px;
 `;
 
 export default Shop;

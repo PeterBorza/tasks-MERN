@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteDTOShoppingItem, getAllDTOShoppingItems } from "src/api";
-import { convertItem } from "src/api/shop-api/converters";
+import { convertItem } from "src/api";
 
 const useQueryShoppingItems = () => {
   const queryClient = useQueryClient();
@@ -16,7 +16,7 @@ const useQueryShoppingItems = () => {
     queryKey: ["items"],
     queryFn: getAllDTOShoppingItems,
     staleTime: 10 * 1000,
-    select: data => data.result?.map(task => convertItem(task)),
+    select: data => data.result?.map(item => convertItem(item)),
   });
 
   return { query, deleteItem };

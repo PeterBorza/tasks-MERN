@@ -6,8 +6,9 @@ type SubCategories = {
   ["non-food"]: "kitchen" | "electronics" | "furniture" | "bathroom";
 };
 
-export type ShoppingItem<T extends Category = Category> = {
-  id: string;
+export type ShoppingItemDTO<T extends Category = Category> = {
+  _id: string;
+  __v: number;
   name: string;
   category: T;
   type: SubCategories[T];
@@ -20,4 +21,4 @@ export type ShoppingItem<T extends Category = Category> = {
   acquired?: boolean;
 };
 
-export type ShoppingItemDTO = Omit<ShoppingItem, "id"> & { _id: string };
+export type ShoppingItem = Omit<ShoppingItemDTO, "_id" | "__v"> & { id: string };

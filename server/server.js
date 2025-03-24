@@ -39,5 +39,11 @@ app.use(errorHandlerMiddleware);
 
 app.listen(PORT, async () => {
   console.log(`Server is listening on port ${PORT}...`);
-  await connectDB();
+  try {
+    console.log("Connecting to DB");
+    await connectDB();
+    console.log("Connected to DB");
+  } catch (error) {
+    console.log("Error connecting to DB: ", error);
+  }
 });

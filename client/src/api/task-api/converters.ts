@@ -1,9 +1,8 @@
 import { TaskDTO, Task } from "./types";
 
-const convertTask = (task: TaskDTO): Task => ({
-  id: task._id,
-  name: task.name,
-  completed: task.completed,
+const convertTask = ({ _id: id, __v, ...rest }: TaskDTO): Task => ({
+  id,
+  ...rest,
 });
 
 export { convertTask };

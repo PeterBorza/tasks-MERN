@@ -10,7 +10,8 @@
     "paths": {
       "src/*": ["./src/*"],
       "components/*": ["./src/components/*"],
-      "features/*": ["./src/features/*"]
+      "features/*": ["./src/features/*"],
+      "assets/*": ["./src/assets/*"]
     },
 
     /* Bundler mode */

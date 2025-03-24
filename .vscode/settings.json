@@ -1,4 +1,7 @@
 {
-  "editor.cursorBlinking": "smooth",
-  "editor.cursorStyle": "line-thin"
+  "editor.cursorBlinking": "expand",
+  "editor.cursorStyle": "line",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.wordWrap": "on",
+  "breadcrumbs.enabled": false
 }

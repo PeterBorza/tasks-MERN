@@ -1,10 +1,11 @@
-export type Task = {
-  id: string;
+export type TaskDTO = {
+  _id: string;
+  __v: number;
   name: string;
   completed: boolean;
 };
 
-export type TaskDTO = Omit<Task, "id"> & { _id: string };
+export type Task = Omit<TaskDTO, "_id" | "__v"> & { id: string };
 
 export type Options = "completed" | "todo" | "all";
 
