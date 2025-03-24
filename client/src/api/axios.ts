@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { BASE_URL } from "./url";
 
 export enum Method {
   GET = "get",
@@ -16,7 +15,6 @@ export const customAxios = async <ResponseType, BodyType = void>(
   config?: AxiosRequestConfig
 ): Promise<ResponseType> => {
   const instance = axios.create({
-    baseURL: BASE_URL,
     timeout: 1000 * 5,
     headers: { "Content-Type": "application/json" },
     validateStatus: status => status < 600,

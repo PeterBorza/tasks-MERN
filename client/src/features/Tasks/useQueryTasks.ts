@@ -12,7 +12,7 @@ const useQueryTasks = () => {
   });
 
   const { mutate: createTask } = useMutation({
-    mutationFn: createDTOTask,
+    mutationFn: (name: string) => createDTOTask(name),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
