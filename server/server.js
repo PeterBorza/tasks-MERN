@@ -6,6 +6,7 @@ import { connectDB } from "./db/connect.js";
 import { notFound } from "./middleware/not-found.js";
 import { errorHandlerMiddleware } from "./middleware/error-handler.js";
 import path from "path";
+import mongoSanitize from "express-mongo-sanitize";
 
 import tasks from "./routes/tasks.js";
 import shoppingItems from "./routes/shoppingItems.js";
@@ -15,13 +16,15 @@ const app = express();
 
 const corsOptions = {
   origin: [APP_ORIGIN, PROD_URL],
-};
+}; 
 
 app.use(cors(corsOptions));
 
 const __dirname = path.resolve();
 
 app.use(express.json());
+app.set('proxy', 1);
+app.use(mongoSanitize)
 
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shoppingItems);
