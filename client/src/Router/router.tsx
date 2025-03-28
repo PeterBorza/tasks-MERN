@@ -3,6 +3,7 @@ import { Navigator } from "src/components/Navigator";
 
 import Home from "./Home";
 import { LandingPage, Shop, Tasks } from "src/features";
+import { Suspense } from "react";
 
 export const HOME_ROUTE = "/";
 export const SHOP_ROUTE = "/shop";
@@ -19,11 +20,11 @@ const router: RouteObject[] = [
       },
       {
         path: SHOP_ROUTE,
-        element: <Shop />,
+        element: <Suspense fallback={<div>...Loading from router</div>}><Shop /></Suspense>,
       },
       {
         path: TASKS_ROUTE,
-        element: <Tasks />,
+        element: <Suspense fallback={<div>...Loading from router suspense</div>}><Tasks /></Suspense>,
       },
       {
         path: "*",

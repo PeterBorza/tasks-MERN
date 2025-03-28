@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { deleteDTOTask, getAllDTOTasks, convertTask, createDTOTask, updateDTOTask } from "src/api";
 
 const useQueryTasks = () => {
@@ -25,11 +25,11 @@ const useQueryTasks = () => {
     },
   });
 
-  const query = useQuery({
+  const query = useSuspenseQuery({
     queryKey: ["tasks"],
     queryFn: getAllDTOTasks,
     staleTime: 10 * 1000,
-    select: data => data.result?.map(task => convertTask(task)) || [],
+    select: data => data.result?.map(task => convertTask(task)),
   });
 
   return {

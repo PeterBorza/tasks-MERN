@@ -53,7 +53,7 @@ const Tasks = () => {
 
       <TaskContainer>
         {isLoading && <div>...Loading</div>}
-        {isError && <div>ERROR: {error.message}</div>}
+        {isError && <div>ERROR: {error?.message}</div>}
         <Suspense fallback={<div>...Loading tasks</div>}>
           {data &&
             filter[selected].map(task => (

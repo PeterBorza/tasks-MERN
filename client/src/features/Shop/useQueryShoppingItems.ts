@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { deleteDTOShoppingItem, getAllDTOShoppingItems } from "src/api";
 import { convertItem } from "src/api";
 
@@ -12,7 +12,7 @@ const useQueryShoppingItems = () => {
     },
   });
 
-  const query = useQuery({
+  const query = useSuspenseQuery({
     queryKey: ["items"],
     queryFn: getAllDTOShoppingItems,
     staleTime: 10 * 1000,
