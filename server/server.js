@@ -23,8 +23,8 @@ app.use(cors(corsOptions));
 const __dirname = path.resolve();
 
 app.use(express.json());
-app.set('proxy', 1);
-app.use(mongoSanitize)
+// app.set('proxy', 1);
+// app.use(mongoSanitize)
 
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shoppingItems);

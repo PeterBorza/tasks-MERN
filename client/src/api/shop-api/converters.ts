@@ -1,6 +1,6 @@
 import { ShoppingItemDTO, ShoppingItem } from "./types";
 
-const convertItem = ({ _id: id, __v, ...rest }: ShoppingItemDTO): ShoppingItem => ({
+const convertItem = ({ _id: id, ...rest }: Omit<ShoppingItemDTO, "__v">): ShoppingItem => ({
   id,
   ...rest,
 });

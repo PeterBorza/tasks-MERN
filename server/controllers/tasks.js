@@ -12,11 +12,18 @@ const createTask = async (req, res) => {
     });
   }
 
-  const task = await Task.create(req.body);
+  try {
+    const task = await Task.create(req.body);
 
-  return res
+    return res
     .status(201)
     .json({ status: RES_SUCCESS, result: task, message: "Created task" });
+  } catch (error) {
+    console.log(error.message)
+    res.status(400).json({status: RES_ERROR, result: '', message: error.message})
+  }
+
+  
 };
 
 const getAllTasks = async (_req, res) => {

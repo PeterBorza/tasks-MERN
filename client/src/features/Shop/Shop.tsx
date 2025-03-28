@@ -29,8 +29,8 @@ const Shop = () => {
                   imageSrc={potato_200}
                 >
                   <p>{item.name}</p>
-                  <p>{item.category}</p>
-                  <p>{item.type}</p>
+                  <p>{item.details}</p>
+                  <p>{item.quantity} BUC</p>
                 </Card>
               ))}
             </>

@@ -11,18 +11,13 @@ const item = {
     type: String,
     default: "",
   },
-  quantity: {
-    type: Number,
-    default: 1
-  },
   acquired: {
     type: Boolean,
     default: false,
   },
   details: {
   type: String,
-  trim: true,
-  default: "",
+  required: [true, "Please give detail for this item"],
   maxLength: [50, "name cannot be longer than 50 characters"],
   }
 };

@@ -1,18 +1,25 @@
 import { NavLink } from "react-router-dom";
-import { HOME_ROUTE, SHOP_ROUTE, TASKS_ROUTE } from "src/Router/router";
+import { HOME_ROUTE, PLAYGROUND_ROUTE, SHOP_ROUTE, TASKS_ROUTE } from "src/Router/router";
 import styled from "styled-components";
 
 const Navbar = () => {
+
+  const links = {
+    Shop: SHOP_ROUTE,
+    Tasks: TASKS_ROUTE,
+    Play: PLAYGROUND_ROUTE
+  }
+
   return (
     <Nav>
       <Link to={HOME_ROUTE}>HOME</Link>
       <LinkContainer>
-        <li>
-          <Link to={SHOP_ROUTE}>Shop</Link>
+        {Object.entries(links).map(([key, val]) => (
+          <li key={key}>
+          <Link to={val}>{key}</Link>
         </li>
-        <li>
-          <Link to={TASKS_ROUTE}>Tasks</Link>
-        </li>
+        
+        ))}
       </LinkContainer>
     </Nav>
   );

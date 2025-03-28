@@ -19,6 +19,11 @@ const GlobalStyles = styled.createGlobalStyle`
     background-color: ${props => props.theme.colors.dark};
     width: 100%;
     height: 100%;
+
+    --c1: #6b6bd6;
+    --c2: #e74f4f;
+    --c3: #fc921f;
+    --c4: #149ece;
   }
 
   body,

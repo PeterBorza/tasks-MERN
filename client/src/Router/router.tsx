@@ -2,12 +2,13 @@ import { createBrowserRouter, RouteObject, RouterProvider } from "react-router-d
 import { Navigator } from "src/components/Navigator";
 
 import Home from "./Home";
-import { LandingPage, Shop, Tasks } from "src/features";
+import { LandingPage, Playground, Shop, Tasks } from "src/features";
 import { Suspense } from "react";
 
 export const HOME_ROUTE = "/";
 export const SHOP_ROUTE = "/shop";
 export const TASKS_ROUTE = "/tasks";
+export const PLAYGROUND_ROUTE = "/play";
 
 const router: RouteObject[] = [
   {
@@ -25,6 +26,10 @@ const router: RouteObject[] = [
       {
         path: TASKS_ROUTE,
         element: <Suspense fallback={<div>...Loading from router suspense</div>}><Tasks /></Suspense>,
+      },
+      {
+        path: PLAYGROUND_ROUTE,
+        element: <Playground />
       },
       {
         path: "*",
