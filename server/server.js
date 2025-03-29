@@ -31,7 +31,7 @@ const __dirname = path.resolve();
 
 app.use(express.json());
 // app.set("proxy", 1);
-app.use(mongoSanitize);
+app.use(mongoSanitize());
 
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shoppingItems);
@@ -47,7 +47,7 @@ if (NODE_ENV === "production") {
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 
-app.listen(PORT, "0.0.0.0", async () => {
+app.listen(PORT, async () => {
   console.log(`Server is listening on port ${PORT}...`);
   try {
     console.log("Connecting to DB");

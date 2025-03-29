@@ -7,7 +7,6 @@ export default defineConfig(({ mode }) => {
 
   const SERVER_URL = mode === "development" ? env.VITE_BASE_URI : env.VITE_PROD_URI;
 
-  console.log(" SERVER_URL:", SERVER_URL);
   return {
     plugins: [react()],
     resolve: {
