@@ -18,21 +18,21 @@ import { APP_ORIGIN, NODE_ENV, PORT, PROD_URL } from "./constants/env.js";
 const app = express();
 const swaggerDocument = YAML.load("./swagger.yaml");
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 const corsOptions = {
   origin: [APP_ORIGIN, PROD_URL],
 };
 
 app.use(cors(corsOptions));
 
+app.get("/health", healthCheck);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 const __dirname = path.resolve();
 
 app.use(express.json());
-app.set("proxy", 1);
+// app.set("proxy", 1);
 app.use(mongoSanitize);
 
-app.get("/health", healthCheck);
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shoppingItems);
 
@@ -47,7 +47,7 @@ if (NODE_ENV === "production") {
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 
-app.listen(PORT, async () => {
+app.listen(PORT, "0.0.0.0", async () => {
   console.log(`Server is listening on port ${PORT}...`);
   try {
     console.log("Connecting to DB");
