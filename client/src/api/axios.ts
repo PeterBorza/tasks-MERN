@@ -15,7 +15,7 @@ export const customAxios = async <ResponseType, BodyType = void>(
   config?: AxiosRequestConfig
 ): Promise<ResponseType> => {
   const instance = axios.create({
-    timeout: 1000 * 5,
+    timeout: 1000 * 20,
     headers: { "Content-Type": "application/json" },
     validateStatus: status => status < 600,
     ...config,

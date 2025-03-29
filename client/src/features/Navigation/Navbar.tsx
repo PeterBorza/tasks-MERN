@@ -28,6 +28,8 @@ const Navbar = () => {
 const Nav = styled.nav`
   width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 16px;
   gap: 8px;
   height: 3rem;
@@ -37,8 +39,7 @@ const Nav = styled.nav`
 const LinkContainer = styled.ul`
   display: flex;
   gap: 2rem;
-  margin-inline: auto 1rem;
-
+  padding-inline: 4px;
   li {
     list-style-type: none;
   }

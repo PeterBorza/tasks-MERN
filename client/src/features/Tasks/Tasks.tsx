@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import Task from "./Task";
 import { Task as TaskType, Options } from "src/api";
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import { Input } from "components/Input";
 import { RadioGroup } from "components/Radio";
 import { Dropdown } from "components/Dropdown";
 import useQueryTasks from "./useQueryTasks";
+import { Spinner } from "src/components/Spinner";
 
 const Tasks = () => {
   const {
@@ -52,14 +53,12 @@ const Tasks = () => {
       </Toolbar>
 
       <TaskContainer>
-        {isLoading && <div>...Loading</div>}
+        {isLoading && <Spinner />}
         {isError && <div>ERROR: {error?.message}</div>}
-        <Suspense fallback={<div>...Loading tasks</div>}>
-          {data &&
-            filter[selected].map(task => (
-              <Task task={task} key={task.id} onDelete={deleteTask} onUpdate={updateTask} />
-            ))}
-        </Suspense>
+        {data &&
+          filter[selected].map(task => (
+            <Task task={task} key={task.id} onDelete={deleteTask} onUpdate={updateTask} />
+          ))}
       </TaskContainer>
     </Container>
   );

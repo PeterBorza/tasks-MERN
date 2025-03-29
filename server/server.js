@@ -7,25 +7,32 @@ import { notFound } from "./middleware/not-found.js";
 import { errorHandlerMiddleware } from "./middleware/error-handler.js";
 import path from "path";
 import mongoSanitize from "express-mongo-sanitize";
+import YAML from "yamljs";
+import swaggerUi from "swagger-ui-express";
 
+import { healthCheck } from "./controllers/healthCheck.js";
 import tasks from "./routes/tasks.js";
 import shoppingItems from "./routes/shoppingItems.js";
 import { APP_ORIGIN, NODE_ENV, PORT, PROD_URL } from "./constants/env.js";
 
 const app = express();
+const swaggerDocument = YAML.load("./swagger.yaml");
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const corsOptions = {
   origin: [APP_ORIGIN, PROD_URL],
-}; 
+};
 
 app.use(cors(corsOptions));
 
 const __dirname = path.resolve();
 
 app.use(express.json());
-// app.set('proxy', 1);
-// app.use(mongoSanitize)
+app.set("proxy", 1);
+app.use(mongoSanitize);
 
+app.get("/health", healthCheck);
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shoppingItems);
 
