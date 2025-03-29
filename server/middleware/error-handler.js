@@ -1,15 +1,17 @@
 import { INTERNAL_SERVER_ERROR } from "../constants/http.js";
+import { RES_ERROR } from "../constants/status.js";
+import { CustomAPIError } from "../errors/custom-error.js";
 
 export const errorHandlerMiddleware = (err, req, res, next) => {
   let customError = {
     // set default
     statusCode: err.statusCode || INTERNAL_SERVER_ERROR,
-    message: err.message || "Something went wrong try again later",
+    message: err.message || "Something went wrong, please try again later",
   };
 
-  // if (err instanceof CustomAPIError) {
-  //   return res.status(err.statusCode).json({ message: err.message })
-  // }
+  if (err instanceof CustomAPIError) {
+    return res.status(err.statusCode).json({ message: err.message });
+  }
 
   if (err.name === "ValidationError") {
     customError.message = Object.values(err.errors)
@@ -30,5 +32,5 @@ export const errorHandlerMiddleware = (err, req, res, next) => {
 
   return res
     .status(customError.statusCode)
-    .json({ message: customError.message });
+    .json({ status: RES_ERROR, message: customError.message });
 };

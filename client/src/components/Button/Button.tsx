@@ -17,7 +17,7 @@ const backgrounds = (props: ThemeType): Record<ButtonType, string> => ({
 
 const Button = ({ children, onClick, type = "valid" }: Props) => {
   return (
-    <StyledButton $type={type} onClick={onClick}>
+    <StyledButton $type={type} onClick={onClick} disabled={type === "disabled"}>
       {children}
     </StyledButton>
   );
@@ -38,6 +38,10 @@ const StyledButton = styled.button<{ $type: ButtonType }>`
   }
   &:active {
     scale: 0.98;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 `;
 

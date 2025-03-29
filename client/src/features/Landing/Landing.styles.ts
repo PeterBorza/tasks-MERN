@@ -30,17 +30,17 @@ const Cover = styled.div`
 
 const TopCover = styled.div`
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
   padding: 1rem;
   height: 100vh;
   background-color: ${props => props.theme.colors.dark};
-  h1 {
-    color: ${props => props.theme.colors.main};
-  }
 `;
+
 const TransparentCover = styled.div`
   height: 40vh;
 `;
+
 const BottomCover = styled.div`
   height: 100vh;
   background-color: ${props => props.theme.colors.dark};
@@ -52,4 +52,8 @@ const HeroImage = styled.img`
   object-fit: cover;
 `;
 
-export { Cover, TopCover, TransparentCover, BottomCover, Container, HeroImage };
+const Title = styled.h1`
+  color: ${props => props.theme.colors.main};
+`;
+
+export { Cover, TopCover, TransparentCover, BottomCover, Container, HeroImage, Title };

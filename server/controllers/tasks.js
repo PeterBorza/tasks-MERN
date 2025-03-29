@@ -1,33 +1,27 @@
 import Task from "../models/Task.js";
 import { RES_ERROR, RES_SUCCESS } from "../constants/status.js";
+import { createCustomError } from "../errors/custom-error.js";
 
-const createTask = async (req, res) => {
+const createTask = async (req, res, next) => {
   const { name } = req.body;
 
-  if (!name) {
-    res.json({
-      status: RES_ERROR,
-      result: null,
-      message: "Please provide a name for the task",
-    });
+  const forbiddenChars = /[<>]/;
+
+  if (forbiddenChars.test(name)) {
+    next(createCustomError("Not allowed characters", 400));
+    return;
   }
 
-  try {
-    const task = await Task.create(req.body);
+  const task = await Task.create(req.body);
 
-    return res
+  return res
     .status(201)
-    .json({ status: RES_SUCCESS, result: task, message: "Created task" });
-  } catch (error) {
-    console.log(error.message)
-    res.status(400).json({status: RES_ERROR, result: '', message: error.message})
-  }
-
-  
+    .json({ status: RES_SUCCESS, result: task, message: "Task created" });
 };
 
 const getAllTasks = async (_req, res) => {
-  const tasks = await Task.find({}).sort("completed");
+  // const tasks = await Task.find({}).sort("completed");
+  const tasks = await Task.find({});
   res.json({ status: RES_SUCCESS, result: tasks });
 };
 

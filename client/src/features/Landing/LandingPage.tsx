@@ -3,6 +3,7 @@ import {
   Container,
   Cover,
   HeroImage,
+  Title,
   TopCover,
   TransparentCover,
 } from "./Landing.styles";
@@ -14,7 +15,8 @@ const LandingPage = () => {
       <HeroImage src={notebook_2000} alt="notebook" />
       <Cover>
         <TopCover>
-          <h1>TASK MANAGER</h1>
+          <Title>TASK MANAGER</Title>
+          <Title>SHOPPING LIST</Title>
         </TopCover>
         <TransparentCover />
         <BottomCover />

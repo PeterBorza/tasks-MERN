@@ -7,7 +7,13 @@ export type TaskDTO = {
 
 export type Task = Omit<TaskDTO, "_id" | "__v"> & { id: string };
 
-export type Options = "completed" | "todo" | "all";
+export const FilterOptions = {
+  COMPLETED: "completed",
+  TODO: "todo",
+  ALL: "all",
+} as const;
+
+export type FilterType = keyof typeof FilterOptions;
 
 export enum TaskState {
   DONE = "DONE",

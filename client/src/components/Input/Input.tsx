@@ -5,15 +5,21 @@ type Props = {
   name: string;
   value: string;
   onChange: Dispatch<SetStateAction<string>>;
+  onSubmit?: () => void;
+  placeHolder?: string;
 };
-const Input = ({ name, value, onChange }: Props) => {
+const Input = ({ name, value, onChange, onSubmit, placeHolder }: Props) => {
+  const handleKeydown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") onSubmit?.();
+  };
   return (
     <StyledInput
       name={name}
       value={value}
       onChange={e => onChange(e.target.value)}
-      placeholder="Add task"
+      placeholder={placeHolder}
       rows={2}
+      onKeyDown={handleKeydown}
     />
   );
 };

@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 export enum Method {
   GET = "get",
@@ -8,6 +8,8 @@ export enum Method {
   PATCH = "patch",
 }
 
+const AXIOS_TIMEOUT = 50 * 1000;
+
 export const customAxios = async <ResponseType, BodyType = void>(
   method: Method,
   endpoint: string,
@@ -15,9 +17,9 @@ export const customAxios = async <ResponseType, BodyType = void>(
   config?: AxiosRequestConfig
 ): Promise<ResponseType> => {
   const instance = axios.create({
-    timeout: 1000 * 20,
+    timeout: AXIOS_TIMEOUT,
     headers: { "Content-Type": "application/json" },
-    validateStatus: status => status < 600,
+    validateStatus: status => status < 400,
     ...config,
   });
 
@@ -25,6 +27,12 @@ export const customAxios = async <ResponseType, BodyType = void>(
     const response = await instance[method](endpoint, data, config);
     return response.data;
   } catch (error) {
-    return { message: error } as ResponseType;
+    if (error instanceof AxiosError) {
+      throw new Error(error?.response?.data.message);
+    } else if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Something went wrong, please try again later");
   }
 };

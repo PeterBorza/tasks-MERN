@@ -21,15 +21,23 @@ const router: RouteObject[] = [
       },
       {
         path: SHOP_ROUTE,
-        element: <Suspense fallback={<div>...Loading from router</div>}><Shop /></Suspense>,
+        element: (
+          <Suspense fallback={<div>...Loading from router</div>}>
+            <Shop />
+          </Suspense>
+        ),
       },
       {
         path: TASKS_ROUTE,
-        element: <Suspense fallback={<div>...Loading from router suspense</div>}><Tasks /></Suspense>,
+        element: (
+          <Suspense fallback={<div>...Loading from router suspense</div>}>
+            <Tasks />
+          </Suspense>
+        ),
       },
       {
         path: PLAYGROUND_ROUTE,
-        element: <Playground />
+        element: <Playground />,
       },
       {
         path: "*",
@@ -40,6 +48,18 @@ const router: RouteObject[] = [
 ];
 
 export const AppRoutes = () => {
-  const appRouter = createBrowserRouter(router);
-  return <RouterProvider router={appRouter} fallbackElement={<div>Error in router</div>} />;
+  const appRouter = createBrowserRouter(router, {
+    future: {
+      v7_relativeSplatPath: true,
+    },
+  });
+  return (
+    <RouterProvider
+      router={appRouter}
+      fallbackElement={<div>Error in router</div>}
+      future={{
+        v7_startTransition: true,
+      }}
+    />
+  );
 };
