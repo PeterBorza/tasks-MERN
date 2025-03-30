@@ -37,7 +37,7 @@ const TaskContainer = styled.div`
   padding: 0.5rem;
   padding-top: 1rem;
   overflow: auto;
-  max-height: 60vh;
+  max-height: 70vh;
   scrollbar-width: thin;
   scrollbar-color: ${props => props.theme.colors.green.default_dark} transparent;
 `;

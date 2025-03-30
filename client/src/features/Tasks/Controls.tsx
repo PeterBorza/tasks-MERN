@@ -3,12 +3,12 @@ import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
 import { RadioGroup } from "src/components/Radio";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Options } from "src/api";
+import { FilterType } from "src/api";
 
 type Props = {
   onCreate: (task: string) => void;
-  selected: Options;
-  setSelected: Dispatch<SetStateAction<Options>>;
+  selected: FilterType;
+  setSelected: Dispatch<SetStateAction<FilterType>>;
 };
 
 const Controls = ({ onCreate, selected, setSelected }: Props) => {
