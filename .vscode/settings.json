@@ -8,5 +8,7 @@
   "editor.fontSize": 15,
   "restoreTerminals.runOnStartup": false,
   "terminal.integrated.persistentSessionReviveProcess": "onExitAndWindowClose",
-  "files.autoSave": "onWindowChange"
+  "files.autoSave": "onWindowChange",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }

@@ -3,22 +3,21 @@ import { HOME_ROUTE, PLAYGROUND_ROUTE, SHOP_ROUTE, TASKS_ROUTE } from "src/Route
 import styled from "styled-components";
 
 const Navbar = () => {
-
   const links = {
     Shop: SHOP_ROUTE,
     Tasks: TASKS_ROUTE,
-    Play: PLAYGROUND_ROUTE
-  }
+    Play: PLAYGROUND_ROUTE,
+  };
 
   return (
     <Nav>
       <Link to={HOME_ROUTE}>HOME</Link>
+
       <LinkContainer>
         {Object.entries(links).map(([key, val]) => (
           <li key={key}>
-          <Link to={val}>{key}</Link>
-        </li>
-        
+            <Link to={val}>{key}</Link>
+          </li>
         ))}
       </LinkContainer>
     </Nav>

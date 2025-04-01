@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Navbar } from "../features";
+import { Footer, Navbar } from "../features";
 import styled from "styled-components";
 
 const Home = () => {
@@ -7,6 +7,7 @@ const Home = () => {
     <AppContainer>
       <Navbar />
       <Outlet />
+      <Footer />
     </AppContainer>
   );
 };

@@ -13,13 +13,9 @@ import useFilteredTasks from "./useFilteredTasks";
 import useTasks from "./useTasks";
 
 const Tasks = () => {
-  const [sort, setSort] = useState<FilterType>("ALL")
-  const {data: tasks, isLoading, isError, error, refetch} = useTasks({sort})
-  const {
-    deleteTask,
-    createTask,
-    updateTask,
-  } = useQueryTasks();
+  const [sort, setSort] = useState<FilterType>("ALL");
+  const { data: tasks, isLoading, isError, error, refetch } = useTasks({ sort });
+  const { deleteTask, createTask, updateTask } = useQueryTasks();
 
   const { filterOption, setFilterOption, filteredTasks } = useFilteredTasks(tasks);
   const [task, setTask] = useState("");

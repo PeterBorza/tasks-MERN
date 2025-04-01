@@ -6,7 +6,6 @@ export type ShoppingItemDTO = {
   quantity: number;
   image?: string;
   acquired?: boolean;
-
 };
 
 export type ShoppingItem = Omit<ShoppingItemDTO, "_id" | "__v"> & { id: string };

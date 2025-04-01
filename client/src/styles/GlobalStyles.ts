@@ -41,6 +41,10 @@ const GlobalStyles = styled.createGlobalStyle`
     outline: none;
   }
 
+  a {
+    all: unset;
+  }
+
   img {
     max-width: 100%;
     display: block;
