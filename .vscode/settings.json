@@ -3,5 +3,10 @@
   "editor.cursorStyle": "line",
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.wordWrap": "on",
-  "breadcrumbs.enabled": false
+  "breadcrumbs.enabled": false,
+  "terminal.integrated.fontSize": 14,
+  "editor.fontSize": 15,
+  "restoreTerminals.runOnStartup": false,
+  "terminal.integrated.persistentSessionReviveProcess": "onExitAndWindowClose",
+  "files.autoSave": "onWindowChange"
 }

@@ -1,11 +1,14 @@
 import { customAxios, Method } from "../axios";
 import { Response } from "../response-types";
-import { Task, TaskDTO } from "./types";
+import { FetchTasksOptions, Task, TaskDTO } from "./types";
 
 export const TASK_URL = "/api/tasks";
 
-const getAllDTOTasks = async (): Promise<Response<TaskDTO[]>> =>
-  (await customAxios<Response<TaskDTO[]>>(Method.GET, TASK_URL)) ?? [];
+const getAllDTOTasks = async ({queryKey}: {queryKey: [string, FetchTasksOptions]}): Promise<Response<TaskDTO[]>> => {
+  const [, params] = queryKey;
+  const sort = params?  `?sort=${params.sort}` : "";
+ return  await customAxios<Response<TaskDTO[]>>(Method.GET, TASK_URL + sort) ?? [];
+}
 
 const createDTOTask = async (name: string): Promise<Response<TaskDTO>> =>
   await customAxios<Response<TaskDTO>, { name: string }>(Method.POST, TASK_URL, { name });

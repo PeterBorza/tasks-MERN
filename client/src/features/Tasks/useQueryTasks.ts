@@ -1,6 +1,8 @@
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { deleteDTOTask, getAllDTOTasks, convertTask, createDTOTask, updateDTOTask } from "src/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteDTOTask, createDTOTask, updateDTOTask } from "src/api";
 import { errorNotification, successNotification } from "src/components/Notifications";
+
+//TODO export more data from mutations, we will need error, data, isFetching...
 
 const useQueryTasks = () => {
   const queryClient = useQueryClient();
@@ -36,15 +38,7 @@ const useQueryTasks = () => {
     },
   });
 
-  const query = useSuspenseQuery({
-    queryKey: ["tasks"],
-    queryFn: getAllDTOTasks,
-    staleTime: 10 * 1000,
-    select: data => data.result?.map(convertTask) || [],
-  });
-
   return {
-    query,
     deleteTask,
     createTask,
     updateTask,

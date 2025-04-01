@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Task from "./Task";
-import { FilterOptions, Task as TaskType } from "src/api";
+import { FilterOptions, Task as TaskType, FilterType } from "src/api";
 import { Container, Title, Toolbar, Actions, TaskContainer } from "./Tasks.styles";
 import { Button } from "components/Button";
 import { Input } from "components/Input";
@@ -10,10 +10,12 @@ import useQueryTasks from "./useQueryTasks";
 import { Spinner } from "src/components/Spinner";
 import { warningNotification } from "src/components/Notifications";
 import useFilteredTasks from "./useFilteredTasks";
+import useTasks from "./useTasks";
 
 const Tasks = () => {
+  const [sort, setSort] = useState<FilterType>("ALL")
+  const {data: tasks, isLoading, isError, error, refetch} = useTasks({sort})
   const {
-    query: { data: tasks, isLoading, isError, error, refetch },
     deleteTask,
     createTask,
     updateTask,
@@ -64,7 +66,15 @@ const Tasks = () => {
               options={Object.keys(FilterOptions)}
               selected={filterOption}
               onChange={setFilterOption}
-              name="tasks"
+              name="filter-tasks"
+            />
+          </Dropdown>
+          <Dropdown label={`Sort: ${filterOption.toLowerCase()}`}>
+            <RadioGroup
+              options={Object.keys(FilterOptions)}
+              selected={sort}
+              onChange={setSort}
+              name="sort-tasks"
             />
           </Dropdown>
         </Actions>

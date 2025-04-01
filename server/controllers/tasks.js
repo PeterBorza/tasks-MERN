@@ -19,9 +19,22 @@ const createTask = async (req, res, next) => {
     .json({ status: RES_SUCCESS, result: task, message: "Task created" });
 };
 
-const getAllTasks = async (_req, res) => {
-  // const tasks = await Task.find({}).sort("completed");
-  const tasks = await Task.find({});
+const getAllTasks = async (req, res) => {
+
+  const {sort} = req.query;
+
+  let result = Task.find({});
+
+  if (sort === 'COMPLETED') {
+    result = result.sort('-completed')
+  }
+
+  if (sort === 'TODO') {
+    result = result.sort('completed')
+  }
+
+  const tasks = await result;
+
   res.json({ status: RES_SUCCESS, result: tasks });
 };
 

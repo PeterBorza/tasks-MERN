@@ -5,7 +5,7 @@ const task = {
     type: String,
     trim: true,
     required: [true, "Please provide task details!"],
-    maxlength: [50, "Name cannot be longer than 50 characters!"],
+    maxlength: [80, "Name cannot be longer than 50 characters!"],
   },
   completed: {
     type: Boolean,
