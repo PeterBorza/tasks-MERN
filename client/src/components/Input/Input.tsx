@@ -25,14 +25,14 @@ const Input = ({ name, value, onChange, onSubmit, placeHolder }: Props) => {
 };
 
 const StyledInput = styled.textarea`
-  min-width: min(300px, 100%);
+  width: 100%;
   padding: 4px 8px;
   line-height: 1.5;
-  font-size: 16px;
+  font-size: ${props => props.theme.fontSize.md};
   border: none;
   outline: none;
   border-radius: 4px;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  resize: none;
 `;
 
 export default Input;

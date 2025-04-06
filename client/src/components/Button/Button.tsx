@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { ThemeType } from "src/styled-components";
+import { ThemeType } from "src/styles/styled-components";
 import styled from "styled-components";
 
 type ButtonType = "warn" | "valid" | "disabled";
@@ -7,6 +7,7 @@ type ButtonType = "warn" | "valid" | "disabled";
 type Props = PropsWithChildren & {
   onClick: () => void;
   type?: ButtonType;
+  title?: string;
 };
 
 const backgrounds = (props: ThemeType): Record<ButtonType, string> => ({
@@ -15,9 +16,9 @@ const backgrounds = (props: ThemeType): Record<ButtonType, string> => ({
   disabled: props.colors.error,
 });
 
-const Button = ({ children, onClick, type = "valid" }: Props) => {
+const Button = ({ children, onClick, type = "valid", title = "" }: Props) => {
   return (
-    <StyledButton $type={type} onClick={onClick} disabled={type === "disabled"}>
+    <StyledButton $type={type} onClick={onClick} disabled={type === "disabled"} title={title}>
       {children}
     </StyledButton>
   );
@@ -25,16 +26,16 @@ const Button = ({ children, onClick, type = "valid" }: Props) => {
 
 const StyledButton = styled.button<{ $type: ButtonType }>`
   color: ${props => props.theme.colors.light};
-  padding: 8px 12px;
+  padding: 4px 8px;
   cursor: pointer;
   background-color: ${props => backgrounds(props.theme)[props.$type]};
   border-radius: 4px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition:
     scale 100ms,
     box-shadow 120ms;
   &:hover {
-    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
   }
   &:active {
     scale: 0.98;

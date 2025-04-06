@@ -1,11 +1,12 @@
-export type TaskDTO = {
-  _id: string;
-  __v: number;
+export type Task = {
+  id: string;
   name: string;
   completed: boolean;
 };
 
-export type Task = Omit<TaskDTO, "_id" | "__v"> & { id: string };
+export type TaskId = Task["id"];
+
+export type UpdatedTask = Pick<Task, "id"> & Partial<Omit<Task, "id">>;
 
 export const FilterOptions = {
   COMPLETED: "completed",
@@ -18,8 +19,3 @@ export type FilterType = keyof typeof FilterOptions;
 export type FetchTasksOptions = {
   sort: FilterType;
 };
-
-export enum TaskState {
-  DONE = "DONE",
-  TODO = "TO DO",
-}

@@ -1,49 +1,77 @@
-import styled from "styled-components";
-import { TaskState, Task as TaskType } from "src/api";
+import styled, { useTheme } from "styled-components";
+import { Task as TaskType, UpdatedTask } from "src/api";
 import { Button } from "src/components/Button";
+import { DeleteIcon, DoneIcon, ProgressIcon, EditIcon } from "src/icons";
+import { useState } from "react";
+import EditTask from "./EditTask";
 
 type Props = {
   task: TaskType;
   onDelete: (id: string) => void;
-  onUpdate: (task: TaskType) => void;
+  onUpdate: (task: UpdatedTask) => void;
 };
 
-const Task = ({ task: { id, name, completed }, onDelete, onUpdate }: Props) => {
+const Task = ({ task, onDelete, onUpdate }: Props) => {
+  const { id, name, completed } = task;
+  const theme = useTheme();
+  const [editTask, setEditTask] = useState<TaskType | undefined>();
   return (
-    <TaskWrapper $completed={completed}>
-      <Description>{name}</Description>
-      <Delete onClick={() => onDelete(id)} type={completed ? "valid" : "warn"}>
-        Delete
-      </Delete>
-      <Toggle
-        $completed={completed}
-        onClick={() => onUpdate({ id, name, completed: !completed })}
-        type={completed ? "valid" : "warn"}
-      >
-        {completed ? TaskState.DONE : TaskState.TODO}
-      </Toggle>
-    </TaskWrapper>
+    <>
+      <TaskWrapper $completed={completed}>
+        <Description>{name}</Description>
+
+        <Actions>
+          <Button
+            onClick={() => onDelete(id)}
+            type={completed ? "valid" : "warn"}
+            title="Delete task"
+          >
+            <DeleteIcon color={theme.colors.error} />
+          </Button>
+          <Button
+            onClick={() => onUpdate({ id, completed: !completed })}
+            type={completed ? "valid" : "warn"}
+            title={completed ? "Mark as to do" : "Check as completed"}
+          >
+            {completed ? (
+              <DoneIcon color={theme.colors.green.light} />
+            ) : (
+              <ProgressIcon color={theme.colors.green.darkest} />
+            )}
+          </Button>
+          <Button
+            onClick={() => setEditTask(task)}
+            type={completed ? "valid" : "warn"}
+            title="Edit task"
+          >
+            <EditIcon color={theme.colors.dark} />
+          </Button>
+        </Actions>
+      </TaskWrapper>
+      {editTask && (
+        <EditTask onClose={() => setEditTask(undefined)} task={task} onUpdate={onUpdate} />
+      )}
+    </>
   );
 };
 
 const TaskWrapper = styled.div<{ $completed: boolean }>`
-  display: grid;
-  grid-template:
-    "task actions"
-    "task actions" auto / 2fr auto;
-  gap: 0.5rem;
-  padding: 0.5rem;
+  display: flex;
+  padding: 4px;
   border: 1px solid
     ${props =>
       props.$completed ? props.theme.colors.green.default_light : props.theme.colors.main};
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 10px
+    ${props =>
+      props.$completed ? props.theme.colors.green.default_light : props.theme.colors.main};
   border-radius: 4px;
   background-color: ${props =>
     props.$completed ? props.theme.colors.green.default_light : props.theme.colors.main};
 `;
 
 const Description = styled.p`
-  grid-area: task;
+  width: 100%;
+  padding: 4px;
   display: -webkit-box;
   max-width: 100%;
   overflow: hidden;
@@ -51,13 +79,10 @@ const Description = styled.p`
   -webkit-box-orient: vertical;
 `;
 
-const Delete = styled(Button)`
-  grid-area: actions;
-`;
-
-const Toggle = styled(Button)<{ $completed: boolean }>`
-  grid-area: actions;
-  background-color: ${props => (props.$completed ? "green" : "red")};
+const Actions = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;
 
 export default Task;

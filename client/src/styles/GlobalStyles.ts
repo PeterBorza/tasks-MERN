@@ -34,6 +34,7 @@ const GlobalStyles = styled.createGlobalStyle`
     height: 100%;
     width: 100%;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    scroll-behavior: smooth;
   }
 
   button {

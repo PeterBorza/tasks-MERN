@@ -1,6 +1,6 @@
 import { customAxios, Method } from "../axios";
 import { Response } from "../response-types";
-import { FetchTasksOptions, Task, TaskDTO } from "./types";
+import { FetchTasksOptions, Task, TaskId, UpdatedTask } from "./types";
 
 export const TASK_URL = "/api/tasks";
 
@@ -8,19 +8,22 @@ const getAllDTOTasks = async ({
   queryKey,
 }: {
   queryKey: [string, FetchTasksOptions];
-}): Promise<Response<TaskDTO[]>> => {
+}): Promise<Response<Task[]>> => {
   const [, params] = queryKey;
   const sort = params ? `?sort=${params.sort}` : "";
-  return (await customAxios<Response<TaskDTO[]>>(Method.GET, TASK_URL + sort)) ?? [];
+  return (await customAxios<Response<Task[]>>(Method.GET, TASK_URL + sort)) ?? [];
 };
 
-const createDTOTask = async (name: string): Promise<Response<TaskDTO>> =>
-  await customAxios<Response<TaskDTO>, { name: string }>(Method.POST, TASK_URL, { name });
+const createDTOTask = async (name: string): Promise<Response<Task>> =>
+  await customAxios<Response<Task>, { name: string }>(Method.POST, TASK_URL, { name });
 
-const deleteDTOTask = async (id: string): Promise<Response> =>
-  await customAxios<Response, string>(Method.DELETE, `${TASK_URL}/${id}`);
+const deleteDTOTask = async (id: TaskId): Promise<Response> =>
+  await customAxios<Response, TaskId>(Method.DELETE, `${TASK_URL}/${id}`);
 
-const updateDTOTask = async (task: Task): Promise<Response<TaskDTO>> =>
-  await customAxios<Response<TaskDTO>, Task>(Method.PATCH, `${TASK_URL}/${task.id}`, task);
+const getSingleDTOTask = async (id: TaskId): Promise<Response<Task>> =>
+  await customAxios<Response<Task>, TaskId>(Method.GET, `${TASK_URL}/${id}`);
 
-export { getAllDTOTasks, deleteDTOTask, updateDTOTask, createDTOTask };
+const updateDTOTask = async (task: UpdatedTask): Promise<Response<Task>> =>
+  await customAxios<Response<Task>, UpdatedTask>(Method.PATCH, `${TASK_URL}/${task.id}`, task);
+
+export { getAllDTOTasks, deleteDTOTask, updateDTOTask, createDTOTask, getSingleDTOTask };

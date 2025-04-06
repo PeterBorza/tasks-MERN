@@ -1,12 +1,12 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { convertTask, FetchTasksOptions, getAllDTOTasks } from "src/api";
+import { FetchTasksOptions, getAllDTOTasks } from "src/api";
 
 const useTasks = (options: FetchTasksOptions) => {
   const tasks = useSuspenseQuery({
     queryKey: ["tasks", options],
     queryFn: getAllDTOTasks,
     staleTime: 10 * 1000,
-    select: data => data.result?.map(convertTask) || [],
+    select: data => data.result || [],
   });
 
   return tasks;

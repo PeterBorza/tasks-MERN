@@ -1,6 +1,12 @@
 import Task from "../models/Task.js";
-import { RES_ERROR, RES_SUCCESS } from "../constants/status.js";
+import { RES_ERROR, RES_SUCCESS, RES_WARN } from "../constants/status.js";
 import { createCustomError } from "../errors/custom-error.js";
+
+const getConvertedTask = (task) => ({
+  id: task._id,
+  name: task.name,
+  completed: task.completed,
+});
 
 const createTask = async (req, res, next) => {
   const { name } = req.body;
@@ -14,28 +20,31 @@ const createTask = async (req, res, next) => {
 
   const task = await Task.create(req.body);
 
-  return res
-    .status(201)
-    .json({ status: RES_SUCCESS, result: task, message: "Task created" });
+  return res.status(201).json({
+    status: RES_SUCCESS,
+    result: getConvertedTask(task),
+    message: "Task created",
+  });
 };
 
 const getAllTasks = async (req, res) => {
-
-  const {sort} = req.query;
+  const { sort } = req.query;
 
   let result = Task.find({});
 
-  if (sort === 'COMPLETED') {
-    result = result.sort('-completed')
+  if (sort === "COMPLETED") {
+    result = result.sort("-completed");
   }
 
-  if (sort === 'TODO') {
-    result = result.sort('completed')
+  if (sort === "TODO") {
+    result = result.sort("completed");
   }
 
   const tasks = await result;
 
-  res.json({ status: RES_SUCCESS, result: tasks });
+  const response = tasks.map(getConvertedTask);
+
+  res.json({ status: RES_SUCCESS, result: response, count: tasks.length });
 };
 
 const deleteTask = async (req, res) => {
@@ -55,6 +64,14 @@ const deleteTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   const { id: taskId } = req.params;
+
+  if (!req.body) {
+    return res.json({
+      status: RES_WARN,
+      result: getConvertedTask(task),
+      message: "No update was made",
+    });
+  }
   const task = await Task.findOneAndUpdate({ _id: taskId }, req.body, {
     new: true,
     runValidators: true,
@@ -70,12 +87,12 @@ const updateTask = async (req, res) => {
 
   res.json({
     status: RES_SUCCESS,
-    result: task,
+    result: getConvertedTask(task),
     message: "Updated Successfully",
   });
 };
 
-const getTask = async (req, res) => {
+const getSingleTask = async (req, res) => {
   const task = await Task.findOne({ _id: req.params.id });
 
   if (!task) {
@@ -86,7 +103,7 @@ const getTask = async (req, res) => {
     });
   }
 
-  res.json({ status: RES_SUCCESS, result: task });
+  res.json({ status: RES_SUCCESS, result: getConvertedTask(task) });
 };
 
-export { createTask, getAllTasks, deleteTask, updateTask, getTask };
+export { createTask, getAllTasks, deleteTask, updateTask, getSingleTask };

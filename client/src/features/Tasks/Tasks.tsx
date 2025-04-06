@@ -3,7 +3,6 @@ import Task from "./Task";
 import { FilterOptions, Task as TaskType, FilterType } from "src/api";
 import { Container, Title, Toolbar, Actions, TaskContainer } from "./Tasks.styles";
 import { Button } from "components/Button";
-import { Input } from "components/Input";
 import { RadioGroup } from "components/Radio";
 import { Dropdown } from "components/Dropdown";
 import useQueryTasks from "./useQueryTasks";
@@ -11,6 +10,7 @@ import { Spinner } from "src/components/Spinner";
 import { warningNotification } from "src/components/Notifications";
 import useFilteredTasks from "./useFilteredTasks";
 import useTasks from "./useTasks";
+import CreateTask from "./CreateTask";
 
 const Tasks = () => {
   const [sort, setSort] = useState<FilterType>("ALL");
@@ -18,14 +18,6 @@ const Tasks = () => {
   const { deleteTask, createTask, updateTask } = useQueryTasks();
 
   const { filterOption, setFilterOption, filteredTasks } = useFilteredTasks(tasks);
-  const [task, setTask] = useState("");
-
-  const handleCreateTask = () => {
-    if (!task) return;
-    createTask(task.trim());
-    // if error coming back from create mutation, persist local state input value
-    setTask("");
-  };
 
   const handleDeleteTask = (task: TaskType) => {
     if (!task.completed) {
@@ -40,22 +32,15 @@ const Tasks = () => {
     refetch();
   };
 
+  const canSort = filterOption === "ALL";
+
   return (
     <Container>
       <Title>Task Manager</Title>
       <Toolbar>
-        <Input
-          name="task"
-          value={task}
-          onChange={setTask}
-          onSubmit={handleCreateTask}
-          placeHolder="Type here"
-        />
+        <CreateTask onCreate={createTask} />
 
         <Actions>
-          <Button type={!task ? "disabled" : "valid"} onClick={handleCreateTask}>
-            Create
-          </Button>
           <Button onClick={handleRefetch}>Refresh</Button>
           <Dropdown label={`Filter: ${filterOption.toLowerCase()}`}>
             <RadioGroup
@@ -65,14 +50,16 @@ const Tasks = () => {
               name="filter-tasks"
             />
           </Dropdown>
-          <Dropdown label={`Sort: ${filterOption.toLowerCase()}`}>
-            <RadioGroup
-              options={Object.keys(FilterOptions)}
-              selected={sort}
-              onChange={setSort}
-              name="sort-tasks"
-            />
-          </Dropdown>
+          {canSort && (
+            <Dropdown label={`Sort: ${sort.toLowerCase()}`}>
+              <RadioGroup
+                options={Object.keys(FilterOptions)}
+                selected={sort}
+                onChange={setSort}
+                name="sort-tasks"
+              />
+            </Dropdown>
+          )}
         </Actions>
       </Toolbar>
 

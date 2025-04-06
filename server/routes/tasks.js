@@ -2,7 +2,7 @@ import express from "express";
 
 import {
   getAllTasks,
-  getTask,
+  getSingleTask,
   deleteTask,
   updateTask,
   createTask,
@@ -11,6 +11,6 @@ import {
 const router = express.Router();
 
 router.route("/").get(getAllTasks).post(createTask);
-router.route("/:id").get(getTask).patch(updateTask).delete(deleteTask);
+router.route("/:id").get(getSingleTask).patch(updateTask).delete(deleteTask);
 
 export default router;
