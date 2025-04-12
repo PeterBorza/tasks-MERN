@@ -1,16 +1,13 @@
 import styled from "styled-components";
 
-import useQueryShoppingItems from "./useQueryShoppingItems";
 import { Suspense } from "react";
 import { Spinner } from "src/components/Spinner";
 import { Card } from "src/components/Card";
 import potato_200 from "src/assets/potato_200.jpg";
+import { useShoppingItems } from "./useShoppingItems";
 
 const Shop = () => {
-  const {
-    query: { data: shoppingList, isPending, isError, error },
-    deleteItem,
-  } = useQueryShoppingItems();
+  const { data: shoppingList, isError, isPending, error } = useShoppingItems();
 
   return (
     <Section>
@@ -21,10 +18,10 @@ const Shop = () => {
             <Spinner />
           ) : (
             <>
-              {shoppingList?.map(item => (
+              {shoppingList.map(item => (
                 <Card
-                  key={item.id}
-                  onClick={() => deleteItem(item.id)}
+                  key={item._id}
+                  onClick={() => console.log(item._id)}
                   title="Delete item"
                   imageSrc={potato_200}
                 >

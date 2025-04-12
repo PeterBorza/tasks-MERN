@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
-const item = {
+const itemSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
     required: [true, "Please provide name"],
-    maxLength: [50, "name cannot be longer than 50 characters"],
+    maxLength: [50, "Name cannot be longer than 50 characters"],
   },
   image: {
     type: String,
@@ -13,20 +13,17 @@ const item = {
   },
   quantity: {
     type: Number,
-    default: 1
-  },
-  acquired: {
-    type: Boolean,
-    default: false,
+    default: 1,
   },
   details: {
-  type: String,
-  trim: true,
-  default: "",
-  maxLength: [50, "name cannot be longer than 50 characters"],
-  }
-};
+    type: String,
+    trim: true,
+    default: "",
+    maxLength: [50, "Name cannot be longer than 50 characters"],
+  },
+});
 
-const ShoppingItemSchema = new mongoose.Schema(item);
+const ShoppingItem =
+  mongoose.models.ShoppingItem || mongoose.model("ShoppingItem", itemSchema);
 
-export default mongoose.model("ShoppingItem", ShoppingItemSchema);
+export default ShoppingItem;

@@ -13,6 +13,7 @@ import swaggerUi from "swagger-ui-express";
 import { healthCheck } from "./controllers/healthCheck.js";
 import tasks from "./routes/tasks.js";
 import shoppingItems from "./routes/shoppingItems.js";
+import shoppingList from "./routes/shoppingList.js";
 import { APP_ORIGIN, NODE_ENV, PORT, PROD_URL } from "./constants/env.js";
 
 const app = express();
@@ -35,6 +36,7 @@ app.use(mongoSanitize());
 
 app.use("/api/tasks", tasks);
 app.use("/api/shopping", shoppingItems);
+app.use("/api/shopping-lists", shoppingList);
 
 if (NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
