@@ -1,5 +1,4 @@
 import { INTERNAL_SERVER_ERROR } from "../constants/http.js";
-import { RES_ERROR } from "../constants/status.js";
 import { CustomAPIError } from "../errors/custom-error.js";
 
 export const errorHandlerMiddleware = (err, req, res, next) => {
@@ -32,5 +31,5 @@ export const errorHandlerMiddleware = (err, req, res, next) => {
 
   return res
     .status(customError.statusCode)
-    .json({ status: RES_ERROR, message: customError.message });
+    .json({ message: customError.message });
 };

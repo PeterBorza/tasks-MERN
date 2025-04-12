@@ -1,28 +1,7 @@
-type Breakpoint = "mobile" | "tablet" | "laptop" | "desktop";
-
-const sizes: Record<Breakpoint, number> = {
-  mobile: 480,
-  tablet: 768,
-  laptop: 1024,
-  desktop: 1200,
-};
-
-export const media = Object.keys(sizes).reduce(
-  (acc, label) => {
-    const key = label as Breakpoint;
-    acc[key] = (style: TemplateStringsArray | string) => `
-    @media (max-width: ${sizes[key]}px) {
-      ${style}
-    }
-  `;
-    return acc;
-  },
-  {} as Record<Breakpoint, (style: TemplateStringsArray | string) => string>
-);
+import { media } from "./types";
 
 export const theme = {
   media,
-  sizes,
   colors: {
     dark: "#242424",
     light: "#f5f5f0",
@@ -44,3 +23,5 @@ export const theme = {
     xl: "20px",
   },
 };
+
+export type ThemeType = typeof theme;

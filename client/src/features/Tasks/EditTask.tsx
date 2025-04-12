@@ -24,7 +24,7 @@ const EditTask: FC<Props> = ({ task, onUpdate, onClose }) => {
     setNewTask(task.name);
   };
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} contentSize="medium">
       <EditForm>
         <h1>Edit task</h1>
         <Input name="edit-task" value={newTask} onChange={setNewTask} />

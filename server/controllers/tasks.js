@@ -1,8 +1,7 @@
 import Task from "../models/Task.js";
-import { RES_ERROR, RES_SUCCESS, RES_WARN } from "../constants/status.js";
 import { createCustomError } from "../errors/custom-error.js";
 
-const getConvertedTask = (task) => ({
+const getConvertedTask = task => ({
   id: task._id,
   name: task.name,
   completed: task.completed,
@@ -21,7 +20,6 @@ const createTask = async (req, res, next) => {
   const task = await Task.create(req.body);
 
   return res.status(201).json({
-    status: RES_SUCCESS,
     result: getConvertedTask(task),
     message: "Task created",
   });
@@ -44,7 +42,7 @@ const getAllTasks = async (req, res) => {
 
   const response = tasks.map(getConvertedTask);
 
-  res.json({ status: RES_SUCCESS, result: response, count: tasks.length });
+  res.json({ result: response, count: tasks.length });
 };
 
 const deleteTask = async (req, res) => {
@@ -53,13 +51,12 @@ const deleteTask = async (req, res) => {
 
   if (!task) {
     return res.json({
-      status: RES_ERROR,
       result: null,
       message: "Task not found",
     });
   }
 
-  res.json({ status: RES_SUCCESS, message: "Deleted Successfully" });
+  res.json({ message: "Deleted Successfully" });
 };
 
 const updateTask = async (req, res) => {
@@ -67,7 +64,6 @@ const updateTask = async (req, res) => {
 
   if (!req.body) {
     return res.json({
-      status: RES_WARN,
       result: getConvertedTask(task),
       message: "No update was made",
     });
@@ -79,14 +75,12 @@ const updateTask = async (req, res) => {
 
   if (!task) {
     return res.json({
-      status: RES_ERROR,
       result: null,
       message: "Task not found",
     });
   }
 
   res.json({
-    status: RES_SUCCESS,
     result: getConvertedTask(task),
     message: "Updated Successfully",
   });
@@ -97,13 +91,12 @@ const getSingleTask = async (req, res) => {
 
   if (!task) {
     return res.json({
-      status: RES_ERROR,
       result: null,
       message: "Task not found",
     });
   }
 
-  res.json({ status: RES_SUCCESS, result: getConvertedTask(task) });
+  res.json({ result: getConvertedTask(task) });
 };
 
 export { createTask, getAllTasks, deleteTask, updateTask, getSingleTask };

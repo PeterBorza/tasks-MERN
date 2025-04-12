@@ -20,8 +20,18 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-      // "no-unused-vars": ["warn"],
+      "no-unused-vars": [
+        "warn",
+        {
+          vars: "all",
+          args: "none",
+          // argsIgnorePattern: "^_",
+          ignoreRestSiblings: true,
+          caughtErrors: "none",
+        },
+      ],
       "no-empty": ["off", { allowEmptyObjects: true }],
+      "@typescript-eslint/no-empty-object-type": "off",
     },
   }
 );

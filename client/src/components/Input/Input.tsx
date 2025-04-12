@@ -14,6 +14,7 @@ const Input = ({ name, value, onChange, onSubmit, placeHolder }: Props) => {
   };
   return (
     <StyledInput
+      aria-label={name}
       name={name}
       value={value}
       onChange={e => onChange(e.target.value)}

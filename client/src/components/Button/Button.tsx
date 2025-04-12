@@ -1,6 +1,5 @@
 import { PropsWithChildren } from "react";
-import { ThemeType } from "src/styles/styled-components";
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
 
 type ButtonType = "warn" | "valid" | "disabled";
 
@@ -10,7 +9,7 @@ type Props = PropsWithChildren & {
   title?: string;
 };
 
-const backgrounds = (props: ThemeType): Record<ButtonType, string> => ({
+const backgrounds = (props: DefaultTheme): Record<ButtonType, string> => ({
   warn: props.colors.main,
   valid: props.colors.green.darker,
   disabled: props.colors.error,
@@ -18,7 +17,13 @@ const backgrounds = (props: ThemeType): Record<ButtonType, string> => ({
 
 const Button = ({ children, onClick, type = "valid", title = "" }: Props) => {
   return (
-    <StyledButton $type={type} onClick={onClick} disabled={type === "disabled"} title={title}>
+    <StyledButton
+      $type={type}
+      onClick={onClick}
+      disabled={type === "disabled"}
+      title={title}
+      aria-label={title}
+    >
       {children}
     </StyledButton>
   );
