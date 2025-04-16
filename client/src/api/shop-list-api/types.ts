@@ -15,6 +15,8 @@ export interface ShoppingList {
   items: Array<{
     item: string;
     acquired: boolean;
+    quantity?: number;
+    details?: string;
   }>;
   resolved: boolean;
   createdAt: string;
@@ -28,8 +30,6 @@ export interface ApiResponse<T> {
 export interface CreateShoppingItemRequest {
   name: string;
   image?: string;
-  quantity?: number;
-  details?: string;
 }
 
 export interface AddItemToListRequest {

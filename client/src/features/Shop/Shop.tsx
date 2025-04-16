@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Suspense } from "react";
 import { Spinner } from "src/components/Spinner";
 import { Card } from "src/components/Card";
-import potato_200 from "src/assets/potato_200.jpg";
+import potato_200 from "src/assets/200/potato_200.jpg";
 import { useShoppingItems } from "./useShoppingItems";
 
 const Shop = () => {
@@ -22,12 +22,10 @@ const Shop = () => {
                 <Card
                   key={item._id}
                   onClick={() => console.log(item._id)}
-                  title="Delete item"
+                  title={item.name}
                   imageSrc={potato_200}
                 >
                   <p>{item.name}</p>
-                  <p>{item.details}</p>
-                  <p>{item.quantity} BUC</p>
                 </Card>
               ))}
             </>

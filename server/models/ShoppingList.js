@@ -18,6 +18,16 @@ const shoppingListSchema = new mongoose.Schema(
           type: Boolean,
           default: false,
         },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+        details: {
+          type: String,
+          trim: true,
+          default: "",
+          maxLength: [50, "Name cannot be longer than 50 characters"],
+        },
       },
     ],
     resolved: {

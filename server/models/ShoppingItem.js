@@ -11,16 +11,6 @@ const itemSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  quantity: {
-    type: Number,
-    default: 1,
-  },
-  details: {
-    type: String,
-    trim: true,
-    default: "",
-    maxLength: [50, "Name cannot be longer than 50 characters"],
-  },
 });
 
 const ShoppingItem =

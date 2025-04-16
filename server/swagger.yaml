@@ -18,27 +18,18 @@ components:
           type: string
         completed:
           type: boolean
-      required: -name
+      required:
+        - name
     ShoppingItem:
       type: object
       properties:
-        id:
-          type: string
         name:
           type: string
-        quantity:
-          type: integer
         image:
           type: string
-        details:
-          type: string
-        required:
-          - name
     ShoppingList:
       type: object
       properties:
-        id:
-          type: string
         name:
           type: string
         creator:
@@ -47,9 +38,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ShoppingItem"
-        required:
-          - creator
-
 paths:
   /tasks:
     get:

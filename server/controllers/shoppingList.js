@@ -22,10 +22,21 @@ const createNewList = async (req, res, next) => {
     );
   }
 
-  const { creator } = req.body;
+  const { creator, itemId, ...rest } = req.body;
+  if (!creator || !itemId) {
+    createCustomError(
+      "Please provide the list creator name and at least an item.",
+      BAD_REQUEST
+    );
+  }
   const newList = new ShoppingList({
     creator,
-    items: [],
+    items: [
+      {
+        item: itemId,
+        ...rest,
+      },
+    ],
     resolved: false,
   });
 
